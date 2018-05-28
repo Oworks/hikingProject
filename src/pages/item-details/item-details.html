@@ -8,10 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <h3 text-center *ngIf="selectedItem">
-    {{selectedItem.name}}
-    {{selectedItem.distance}}
-    {{selectedItem.start}}
-    {{selectedItem.end}}
-  </h3>
+  <h3 text-center *ngIf="selectedItem">{{selectedItem.name}}</h3>
+    <p>{{selectedItem.distance}}</p>
+    <p>{{selectedItem.start}}</p>
+    <p>{{selectedItem.end}}</p>
+    <button ion-button>Hiking in process</button>
 </ion-content>
