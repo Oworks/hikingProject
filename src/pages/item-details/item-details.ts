@@ -20,6 +20,5 @@ export class ItemDetailsPage {
   }
   openHikingInProcess(){
     this.navCtrl.push('HikingInProcess');
-    // this.nav.push('HomePage');
   }
 }

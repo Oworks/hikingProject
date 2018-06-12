@@ -41,7 +41,6 @@ export class ListPage {
     this.navCtrl.push(ItemDetailsPage, {
       item: item,
       hiking: hiking
-
     });
   }
 }
