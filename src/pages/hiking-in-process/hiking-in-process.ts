@@ -20,6 +20,5 @@ export class HikingInProcess {
       console.log(this.latitude);
     }).catch(err => console.log(err));
   }
-
   
 }
