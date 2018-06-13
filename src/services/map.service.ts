@@ -48,12 +48,12 @@ export class MapService {
      * @return service instance
      */
     track(map: ElementRef, dep: any, end: any) : MapService {
-        const startPos = new google.maps.LatLng(dep.latitude, dep.longitude);
         const endPos = new google.maps.LatLng(end.latitude, end.longitude);
+        const startPos = new google.maps.LatLng(dep.latitude, dep.longitude);
         this._map = new google.maps.Map(map.nativeElement, {
             center: startPos,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
-            zoom: 5
+            zoom: 10
         });
         let dirs = new google.maps.DirectionsRenderer();
         dirs.setMap(this._map);

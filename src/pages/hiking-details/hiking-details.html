@@ -8,12 +8,12 @@
 </ion-header>
 
 <ion-content>
-  <h3 text-center *ngIf="selectedItem">
-    {{selectedItem.name}}
-    {{selectedItem.distance}}
-    {{selectedItem.start}}
-    {{selectedItem.end}}
-  </h3>
+  <div text-center *ngIf="selectedItem">
+    <h3> {{ selectedItem.name }} </h3>
+    <p> {{ selectedItem.description }} </p>
+  </div>
   
-   <button ion-button (click)='openHikingInProcess()' color="dark"> open </button>
+  <div text-center>
+    <button ion-button (click)='openHikingInProcess()' color="dark">Start hiking</button>
+  </div>
 </ion-content>

@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { HikingDetails } from '../pages/hiking-details/hiking-details';
 import { HikingsList } from '../pages/hikings-list/hikings-list';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -13,7 +12,6 @@ import { MapService } from '../services/map.service';
 @NgModule({
   declarations: [
     MyApp,
-    HelloIonicPage,
     HikingDetails,
     HikingsList
   ],
@@ -24,7 +22,6 @@ import { MapService } from '../services/map.service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HelloIonicPage,
     HikingDetails,
     HikingsList
   ],

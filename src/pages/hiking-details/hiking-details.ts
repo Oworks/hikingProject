@@ -9,15 +9,15 @@ import { HikingModel } from '../../model/hiking-model';
 })
 export class HikingDetails {
 
-  private _selectedItem: HikingModel;
+  public selectedItem: HikingModel;
   
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this._selectedItem = navParams.get('hiking');
+    this.selectedItem = navParams.get('hiking');
   }
 
   openHikingInProcess() {
     this.navCtrl.push('HikingInProcess', {
-      item: this._selectedItem
+      item: this.selectedItem
     });
   }
 }
