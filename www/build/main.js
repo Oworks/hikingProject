@@ -111,11 +111,23 @@ var ListPage = (function () {
             });
         }
         this.hikings = [
-            new __WEBPACK_IMPORTED_MODULE_3__model_hiking_model__["a" /* HikingModel */]('hiking1', 10, 'clermont', 'aubière'),
-            new __WEBPACK_IMPORTED_MODULE_3__model_hiking_model__["a" /* HikingModel */]('hiking2', 20, 'clermont', 'rion')
+            new __WEBPACK_IMPORTED_MODULE_3__model_hiking_model__["a" /* HikingModel */]('hiking1', {
+                latitude: 101.43,
+                longitude: 118.10
+            }, {
+                latitude: 231.23,
+                longitude: 120.12
+            }),
+            new __WEBPACK_IMPORTED_MODULE_3__model_hiking_model__["a" /* HikingModel */]('hiking2', {
+                latitude: 231.23,
+                longitude: 120.12
+            }, {
+                latitude: 101.43,
+                longitude: 118.10
+            }),
         ];
     }
-    ListPage.prototype.itemTapped = function (event, item, hiking) {
+    ListPage.prototype.itemTapped = function (evt, item, hiking) {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__item_details_item_details__["a" /* ItemDetailsPage */], {
             item: item,
             hiking: hiking
@@ -123,7 +135,7 @@ var ListPage = (function () {
     };
     ListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-list',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/list/list.html"*/`<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>My First List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<!-- <ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon name="{{item.icon}}" item-left></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-right>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n</ion-content> -->\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let hiking of hikings" (click)="itemTapped($event, item, hiking)">\n      {{hiking.name}}\n    </button>\n  </ion-list>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/list/list.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/list/list.html"*/`<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hikings management</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<!-- <ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon name="{{item.icon}}" item-left></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-right>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n</ion-content> -->\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let hiking of hikings" (click)="itemTapped($event, item, hiking)">\n      {{hiking.name}}\n    </button>\n  </ion-list>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/list/list.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
     ], ListPage);
@@ -156,16 +168,16 @@ var ItemDetailsPage = (function () {
     function ItemDetailsPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        // If we navigated to this page, we will have an item available as a nav param
-        // this.selectedItem = navParams.get('item');
-        this.selectedItem = navParams.get('hiking');
+        this._selectedItem = navParams.get('hiking');
     }
     ItemDetailsPage.prototype.openHikingInProcess = function () {
-        this.navCtrl.push('HikingInProcess');
+        this.navCtrl.push('HikingInProcess', {
+            item: this._selectedItem
+        });
     };
     ItemDetailsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-item-details',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/item-details/item-details.html"*/`<ion-header>\n  <ion-navbar>\n    <button menuToggle *ngIf="!selectedItem">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hiking Details</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <h3 text-center *ngIf="selectedItem">\n    {{selectedItem.name}}\n    {{selectedItem.distance}}\n    {{selectedItem.start}}\n    {{selectedItem.end}}\n  </h3>\n   <!-- <button [navPush]="hikingInProgress">Go to hiking in progress page</button> -->\n   <button ion-button (click)=\'openHikingInProcess()\' color="dark"> open </button>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/item-details/item-details.html"*/
+            selector: 'page-item-details',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/item-details/item-details.html"*/`<ion-header>\n  <ion-navbar>\n    <button menuToggle *ngIf="!selectedItem">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hiking Details</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <h3 text-center *ngIf="selectedItem">\n    {{selectedItem.name}}\n    {{selectedItem.distance}}\n    {{selectedItem.start}}\n    {{selectedItem.end}}\n  </h3>\n  \n   <button ion-button (click)=\'openHikingInProcess()\' color="dark"> open </button>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/item-details/item-details.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
     ], ItemDetailsPage);
@@ -205,12 +217,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_geolocation__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_map_service__ = __webpack_require__(417);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -251,6 +265,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_9__ionic_native_geolocation__["a" /* Geolocation */],
                 __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__["a" /* SplashScreen */],
+                __WEBPACK_IMPORTED_MODULE_10__services_map_service__["a" /* MapService */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] }
             ]
         })
@@ -343,13 +358,11 @@ var MyApp = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HikingModel; });
 var HikingModel = (function () {
-    function HikingModel(name, distance, start, end) {
+    function HikingModel(name, start, end) {
         this.name = name;
-        this.distance = distance;
         this.start = start;
         this.end = end;
         this.name = name;
-        this.distance = distance;
         this.start = start;
         this.end = end;
     }
@@ -357,6 +370,93 @@ var HikingModel = (function () {
 }());
 
 //# sourceMappingURL=hiking-model.js.map
+
+/***/ }),
+
+/***/ 417:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__agm_core_services_google_maps_types__ = __webpack_require__(418);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * maps service
+ * handle geolocation and hikings management
+ */
+var MapService = (function () {
+    function MapService(_geolocation) {
+        this._geolocation = _geolocation;
+        this._routeService = new __WEBPACK_IMPORTED_MODULE_2__agm_core_services_google_maps_types__["a" /* google */].maps().DirectionsService();
+    }
+    /**
+     * Start watching position
+     */
+    MapService.prototype.watch = function () {
+        var _this = this;
+        if (!this._map)
+            return;
+        var infos = new __WEBPACK_IMPORTED_MODULE_2__agm_core_services_google_maps_types__["a" /* google */].maps.InfoWindow({
+            map: this._map
+        });
+        this._geolocation.watchPosition().subscribe(function (data) {
+            var pos = {
+                lng: data.coords.longitude,
+                lat: data.coords.latitude
+            };
+            _this._map.setCenter(pos);
+            infos.setPosition(pos);
+            infos.setContent('You are here');
+        });
+    };
+    /**
+     * Generate trip tracker
+     * @param map element to bind
+     * @param dep start position
+     * @param end end position
+     */
+    MapService.prototype.track = function (map, dep, end) {
+        var startPos = new __WEBPACK_IMPORTED_MODULE_2__agm_core_services_google_maps_types__["a" /* google */].maps.LatLng(dep.latitude, dep.longitude);
+        var endPos = new __WEBPACK_IMPORTED_MODULE_2__agm_core_services_google_maps_types__["a" /* google */].maps.LatLng(end.latitude, end.longitude);
+        var opts = {
+            center: startPos,
+            mapTypeId: __WEBPACK_IMPORTED_MODULE_2__agm_core_services_google_maps_types__["a" /* google */].maps.MapTypeId.ROADMAP
+        };
+        var dirs = new __WEBPACK_IMPORTED_MODULE_2__agm_core_services_google_maps_types__["a" /* google */].maps.DirectionsRenderer();
+        this._map = new __WEBPACK_IMPORTED_MODULE_2__agm_core_services_google_maps_types__["a" /* google */].maps.Map(map.nativeElement, opts);
+        dirs.setMap(this._map);
+        var tripOpts = {
+            travelMode: 'WALKING',
+            origin: startPos,
+            destination: endPos
+        };
+        this._routeService.route(tripOpts, function (res, status) {
+            if (status === 'OK') {
+                dirs.setDirections(res);
+            }
+        });
+    };
+    MapService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */]])
+    ], MapService);
+    return MapService;
+}());
+
+//# sourceMappingURL=map.service.js.map
 
 /***/ })
 

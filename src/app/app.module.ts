@@ -8,6 +8,7 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
+import { MapService } from '../services/map-service';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     StatusBar,
     Geolocation,
     SplashScreen,
+    MapService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

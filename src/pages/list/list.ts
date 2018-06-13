@@ -12,15 +12,16 @@ import {HikingModel} from '../../model/hiking-model';
   templateUrl: 'list.html'
 })
 export class ListPage {
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+
   public hikings: Array<HikingModel>;
 
+  private icons: string[];
+
+  private items: Array<{title: string, note: string, icon: string}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
-
     this.items = [];
     for(let i = 1; i < 11; i++) {
       this.items.push({
@@ -30,14 +31,25 @@ export class ListPage {
       });
     }
     this.hikings = [
-      new HikingModel('hiking1', 10, 'clermont', 'aubière'),
-      new HikingModel('hiking2', 20, 'clermont', 'rion')
+      new HikingModel('hiking1', {
+        latitude: 101.43,
+        longitude: 118.10
+      }, {
+        latitude: 231.23,
+        longitude: 120.12
+      }),
+      
+      new HikingModel('hiking2', {
+        latitude: 231.23,
+        longitude: 120.12
+      }, {
+        latitude: 101.43,
+        longitude: 118.10
+      }),
   ];
+}
 
-
-  }
-
-  itemTapped(event, item,hiking) {
+  itemTapped(evt, item, hiking) {
     this.navCtrl.push(ItemDetailsPage, {
       item: item,
       hiking: hiking

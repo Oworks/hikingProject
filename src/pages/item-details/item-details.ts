@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
 import { NavController, NavParams } from 'ionic-angular';
+import { HikingModel } from '../../model/hiking-model';
 
 
 @Component({
@@ -8,17 +8,16 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'item-details.html'
 })
 export class ItemDetailsPage {
-  // selectedItem: {title: string} | any;
-  selectedItem: any;
 
-
-
+  private _selectedItem: HikingModel;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    // this.selectedItem = navParams.get('item');
-    this.selectedItem = navParams.get('hiking');
+    this._selectedItem = navParams.get('hiking');
   }
-  openHikingInProcess(){
-    this.navCtrl.push('HikingInProcess');
+
+  openHikingInProcess() {
+    this.navCtrl.push('HikingInProcess', {
+      item: this._selectedItem
+    });
   }
 }

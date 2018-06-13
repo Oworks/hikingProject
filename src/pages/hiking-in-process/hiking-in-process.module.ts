@@ -3,8 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { HikingInProcess } from './hiking-in-process';
 import { AgmCoreModule } from '@agm/core';
 
-
-
 @NgModule({
   declarations: [
     HikingInProcess,
