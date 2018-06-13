@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
-
 import { NavController, NavParams } from 'ionic-angular';
-
-import { ItemDetailsPage } from '../item-details/item-details';
-
-
-import {HikingModel} from '../../model/hiking-model';
+import { HikingDetails } from '../hiking-details/hiking-details';
+import { HikingModel } from '../../model/hiking-model';
 
 @Component({
   selector: 'page-list',
-  templateUrl: 'list.html'
+  templateUrl: 'hikings-list.html'
 })
-export class ListPage {
+export class HikingsList {
 
   public hikings: Array<HikingModel>;
 
@@ -50,7 +46,7 @@ export class ListPage {
 }
 
   itemTapped(evt, item, hiking) {
-    this.navCtrl.push(ItemDetailsPage, {
+    this.navCtrl.push(HikingDetails, {
       item: item,
       hiking: hiking
     });

@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MapService } from '../../services/map-service';
+import { IonicPage, NavParams } from 'ionic-angular';
+import { MapService } from '../../services/map.service';
 import { HikingModel } from '../../model/hiking-model';
 
 @IonicPage()
@@ -15,13 +15,13 @@ export class HikingInProcess {
 
     private _item : HikingModel;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private _mapService : MapService) {
+    constructor(public navParams: NavParams, private _mapService : MapService) {
       this._item = navParams.get('item');
     }
 
-    ngOnInit() {
-      this._mapService.track(this.map, this._item.start, this._item.end);
-      this._mapService.watch();
+    ngAfterViewInit() {
+      this._mapService
+        .track(this.map, this._item.start, this._item.end)
+        .watch();
     }
-  
 }

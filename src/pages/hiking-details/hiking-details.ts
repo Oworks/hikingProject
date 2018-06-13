@@ -5,9 +5,9 @@ import { HikingModel } from '../../model/hiking-model';
 
 @Component({
   selector: 'page-item-details',
-  templateUrl: 'item-details.html'
+  templateUrl: 'hiking-details.html'
 })
-export class ItemDetailsPage {
+export class HikingDetails {
 
   private _selectedItem: HikingModel;
   

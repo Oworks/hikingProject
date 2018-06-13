@@ -1,6 +1,7 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
-import { google } from '@agm/core/services/google-maps-types';
+
+declare var google;
 
 /**
  * Maps service
@@ -14,18 +15,20 @@ export class MapService {
     private _routeService;
 
     constructor(private _geolocation : Geolocation) { 
-        this._routeService = new google.maps().DirectionsService();
+        this._routeService = new google.maps.DirectionsService();
     }
 
     /**
      * Start watching position
+     * @return service instance
      */
-    watch() {
+    watch() : MapService {
         if (!this._map) return;
         let infos =  new google.maps.InfoWindow({
             map: this._map
         });
-        this._geolocation.watchPosition().subscribe(data => {
+        const watcher = this._geolocation.watchPosition();
+        watcher.subscribe(data => {
             const pos = {
                 lng: data.coords.longitude,
                 lat: data.coords.latitude
@@ -34,6 +37,7 @@ export class MapService {
             infos.setPosition(pos);
             infos.setContent('You are here');
         });
+        return this;
     }
 
     /**
@@ -41,26 +45,27 @@ export class MapService {
      * @param map element to bind
      * @param dep start position
      * @param end end position
+     * @return service instance
      */
-    track(map: ElementRef, dep: any, end: any) {
+    track(map: ElementRef, dep: any, end: any) : MapService {
         const startPos = new google.maps.LatLng(dep.latitude, dep.longitude);
         const endPos = new google.maps.LatLng(end.latitude, end.longitude);
-        const opts = {
+        this._map = new google.maps.Map(map.nativeElement, {
             center: startPos,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            zoom: 5
+        });
         let dirs = new google.maps.DirectionsRenderer();
-        this._map = new google.maps.Map(map.nativeElement, opts);
         dirs.setMap(this._map);
-        const tripOpts = {
+        this._routeService.route({
             travelMode: 'WALKING',
             origin: startPos,
             destination: endPos
-        }
-        this._routeService.route(tripOpts, (res, status) => {
+        }, function(res, status) {
             if (status === 'OK') {
                 dirs.setDirections(res);
             }
         });
+        return this;
     }
 }
