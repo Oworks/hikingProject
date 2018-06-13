@@ -23,20 +23,21 @@ export class MapService {
      * @return service instance
      */
     watch() : MapService {
-        if (!this._map) return;
-        let infos =  new google.maps.InfoWindow({
-            map: this._map
-        });
-        const watcher = this._geolocation.watchPosition();
-        watcher.subscribe(data => {
-            const pos = {
-                lng: data.coords.longitude,
-                lat: data.coords.latitude
-            }
-            this._map.setCenter(pos);
-            infos.setPosition(pos);
-            infos.setContent('You are here');
-        });
+        if (this._map) {
+            let infos =  new google.maps.InfoWindow({
+                map: this._map
+            });
+            const watcher = this._geolocation.watchPosition();
+            watcher.subscribe(data => {
+                const pos = {
+                    lng: data.coords.longitude,
+                    lat: data.coords.latitude
+                }
+                this._map.setCenter(pos);
+                infos.setPosition(pos);
+                infos.setContent('You are here');
+            });
+        }
         return this;
     }
 

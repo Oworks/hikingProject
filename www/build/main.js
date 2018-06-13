@@ -189,21 +189,21 @@ var MapService = (function () {
      */
     MapService.prototype.watch = function () {
         var _this = this;
-        if (!this._map)
-            return;
-        var infos = new google.maps.InfoWindow({
-            map: this._map
-        });
-        var watcher = this._geolocation.watchPosition();
-        watcher.subscribe(function (data) {
-            var pos = {
-                lng: data.coords.longitude,
-                lat: data.coords.latitude
-            };
-            _this._map.setCenter(pos);
-            infos.setPosition(pos);
-            infos.setContent('You are here');
-        });
+        if (this._map) {
+            var infos_1 = new google.maps.InfoWindow({
+                map: this._map
+            });
+            var watcher = this._geolocation.watchPosition();
+            watcher.subscribe(function (data) {
+                var pos = {
+                    lng: data.coords.longitude,
+                    lat: data.coords.latitude
+                };
+                _this._map.setCenter(pos);
+                infos_1.setPosition(pos);
+                infos_1.setContent('You are here');
+            });
+        }
         return this;
     };
     /**
@@ -214,8 +214,8 @@ var MapService = (function () {
      * @return service instance
      */
     MapService.prototype.track = function (map, dep, end) {
-        var startPos = new google.maps.LatLng(dep.latitude, dep.longitude);
         var endPos = new google.maps.LatLng(end.latitude, end.longitude);
+        var startPos = new google.maps.LatLng(dep.latitude, dep.longitude);
         this._map = new google.maps.Map(map.nativeElement, {
             center: startPos,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -418,6 +418,9 @@ var HikingModel = (function () {
         this.end = end;
         this.describe();
     }
+    /**
+     * Format description
+     */
     HikingModel.prototype.describe = function () {
         var get = function (coords) {
             return 'Latitude : ' + coords.latitude + ' - Longitude : ' + coords.longitude;
