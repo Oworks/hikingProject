@@ -1,11 +1,14 @@
+import { CoordinatesModel } from "./coordinates-model";
+
 export class HikingModel {
 
   public description : string;
 
-  constructor(public name: string, public start: any, public end: any) {
+  constructor(public name: string, public start: any, public end: any, public steps: CoordinatesModel) {
     this.name = name;
     this.start = start;
     this.end = end;
+    this.steps = steps;
     this.describe();
   }
 

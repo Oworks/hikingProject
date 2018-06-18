@@ -19,7 +19,7 @@ export class HikingInProcess {
       this._item = navParams.get('item');
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit() : void {
       this._mapService
         .track(this.map, this._item.start, this._item.end)
         .watch();

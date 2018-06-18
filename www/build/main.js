@@ -217,8 +217,8 @@ var MapService = (function () {
         var endPos = new google.maps.LatLng(end.latitude, end.longitude);
         var startPos = new google.maps.LatLng(dep.latitude, dep.longitude);
         this._map = new google.maps.Map(map.nativeElement, {
-            center: startPos,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: startPos,
             zoom: 10
         });
         var dirs = new google.maps.DirectionsRenderer();
@@ -228,7 +228,7 @@ var MapService = (function () {
             origin: startPos,
             destination: endPos
         }, function (res, status) {
-            if (status === 'OK') {
+            if (status == 'OK') {
                 dirs.setDirections(res);
             }
         });

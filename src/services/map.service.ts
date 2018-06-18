@@ -52,8 +52,8 @@ export class MapService {
         const endPos = new google.maps.LatLng(end.latitude, end.longitude);
         const startPos = new google.maps.LatLng(dep.latitude, dep.longitude);
         this._map = new google.maps.Map(map.nativeElement, {
-            center: startPos,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: startPos,
             zoom: 10
         });
         let dirs = new google.maps.DirectionsRenderer();
@@ -63,7 +63,7 @@ export class MapService {
             origin: startPos,
             destination: endPos
         }, function(res, status) {
-            if (status === 'OK') {
+            if (status == 'OK') {
                 dirs.setDirections(res);
             }
         });
