@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { MapService } from '../services/map.service';
+import { DataRecoveyProvider } from '../providers/data-recovey/data-recovey';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MapService } from '../services/map.service';
     Geolocation,
     SplashScreen,
     MapService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DataRecoveyProvider
   ]
 })
 export class AppModule {}
