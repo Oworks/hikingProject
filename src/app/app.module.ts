@@ -7,8 +7,8 @@ import { HikingsList } from '../pages/hikings-list/hikings-list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
-import { MapService } from '../services/map.service';
-import { DataRecoveyProvider } from '../providers/data-recovey/data-recovey';
+import { MapService } from '../providers/map-service';
+import { DataRecoveyProvider } from '../providers/data-recovery';
 
 @NgModule({
   declarations: [
@@ -30,9 +30,9 @@ import { DataRecoveyProvider } from '../providers/data-recovey/data-recovey';
     StatusBar,
     Geolocation,
     SplashScreen,
-    MapService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataRecoveyProvider
+    DataRecoveyProvider,
+    MapService
   ]
 })
 export class AppModule {}
