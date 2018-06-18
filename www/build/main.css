@@ -25678,6 +25678,6 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
-page-hiking-in-process agm-map {
-  height: 500px;
+page-hiking-in-process #map {
+  height: 100%;
 }

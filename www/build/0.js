@@ -14712,7 +14712,8 @@ var BROWSER_GLOBALS_PROVIDERS = [WindowRef, DocumentRef];
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HikingInProcess; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_map_service__ = __webpack_require__(222);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -14724,24 +14725,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var HikingInProcess = (function () {
-    function HikingInProcess(geolocation) {
-        var _this = this;
-        geolocation.getCurrentPosition().then(function (pos) {
-            _this.latitude = pos.coords.latitude;
-            _this.longitude = pos.coords.longitude;
-            console.log(_this.longitude);
-            console.log(_this.latitude);
-        }).catch(function (err) { return console.log(err); });
+    function HikingInProcess(navParams, _mapService) {
+        this.navParams = navParams;
+        this._mapService = _mapService;
+        this._item = navParams.get('item');
     }
+    HikingInProcess.prototype.ngAfterViewInit = function () {
+        this._mapService
+            .track(this.map, this._item.start, this._item.end)
+            .watch();
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+    ], HikingInProcess.prototype, "map", void 0);
     HikingInProcess = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-hiking-in-process',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hiking-in-process/hiking-in-process.html"*/`<!--\n  Generated template for the HikingInProcess page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Hiking in process</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h1>{{ title }}</h1>\n\n\n  <agm-map [latitude]="latitude" [longitude]="longitude">\n\n  </agm-map>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hiking-in-process/hiking-in-process.html"*/,
+            selector: 'page-hiking-in-process',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hiking-in-process/hiking-in-process.html"*/`<ion-header>\n\n  <ion-navbar>\n    <ion-title>Hiking in process</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h1>{{ title }}</h1>\n\n  <div #map id="map"></div>\n\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hiking-in-process/hiking-in-process.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__services_map_service__["a" /* MapService */]])
     ], HikingInProcess);
     return HikingInProcess;
-    var _a;
 }());
 
 //# sourceMappingURL=hiking-in-process.js.map
@@ -25003,7 +25009,7 @@ exports.startWith = startWith_1.startWith;
  * forces apps to bring in asap scheduler along with
  * Immediate, root, and other supporting code.
  */
-// export { subscribeOn } from './subscribeOn';
+// export { subscribeOn } from './operators/subscribeOn';
 var switchAll_1 = __webpack_require__(387);
 exports.switchAll = switchAll_1.switchAll;
 var switchMap_1 = __webpack_require__(307);
@@ -25050,7 +25056,7 @@ var zip_1 = __webpack_require__(289);
 exports.zip = zip_1.zip;
 var zipAll_1 = __webpack_require__(404);
 exports.zipAll = zipAll_1.zipAll;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=operators.js.map
 
 /***/ }),
 /* 699 */

@@ -1,9 +1,24 @@
+import { CoordinatesModel } from "./coordinates-model";
+
 export class HikingModel {
 
-  constructor(public name: string, public distance: number, public start: string, public end: string){
+  public description : string;
+
+  constructor(public name: string, public start: any, public end: any, public steps: CoordinatesModel) {
     this.name = name;
-    this.distance = distance;
     this.start = start;
     this.end = end;
+    this.steps = steps;
+    this.describe();
+  }
+
+  /**
+   * Format description
+   */
+  private describe() : void {
+    const get = coords => {
+      return 'Latitude : ' + coords.latitude + ' - Longitude : ' + coords.longitude;
+    }
+    this.description = 'FROM ' + get(this.start) + ' TO ' + get(this.end);
   }
 }

@@ -2,20 +2,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ItemDetailsPage } from '../pages/item-details/item-details';
-import { ListPage } from '../pages/list/list';
+import { HikingDetails } from '../pages/hiking-details/hiking-details';
+import { HikingsList } from '../pages/hikings-list/hikings-list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
+import { MapService } from '../services/map.service';
 import { DataRecoveyProvider } from '../providers/data-recovey/data-recovey';
 
 @NgModule({
   declarations: [
     MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage
+    HikingDetails,
+    HikingsList
   ],
   imports: [
     BrowserModule,
@@ -24,14 +23,14 @@ import { DataRecoveyProvider } from '../providers/data-recovey/data-recovey';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage
+    HikingDetails,
+    HikingsList
   ],
   providers: [
     StatusBar,
     Geolocation,
     SplashScreen,
+    MapService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataRecoveyProvider
   ]
