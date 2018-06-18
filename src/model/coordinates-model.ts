@@ -1,9 +1,9 @@
 export class CoordinatesModel {
 
-    public points = []
+    public points : Array<any>;
   
-    constructor(latitude: number, longitude: number) {
-        this.add(latitude, longitude);
+    constructor() {
+        this.points = [];
     }
 
     public add(latitude: number, longitude: number) : void {
@@ -12,4 +12,4 @@ export class CoordinatesModel {
             longitude: longitude
         });
     }
-  }
+}

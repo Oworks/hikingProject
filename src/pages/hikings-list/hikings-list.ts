@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { HikingDetails } from '../hiking-details/hiking-details';
 import { HikingModel } from '../../model/hiking-model';
+import { CoordinatesModel } from '../../model/coordinates-model';
 
 @Component({
   selector: 'page-list',
@@ -33,7 +34,7 @@ export class HikingsList {
       }, {
         latitude: 231.23,
         longitude: 120.12
-      }),
+      }, new CoordinatesModel()),
       
       new HikingModel('hiking2', {
         latitude: 231.23,
@@ -41,7 +42,7 @@ export class HikingsList {
       }, {
         latitude: 101.43,
         longitude: 118.10
-      }),
+      }, new CoordinatesModel()),
   ];
 }
 
