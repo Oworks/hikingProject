@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { HikingDetails } from '../hiking-details/hiking-details';
-import { HikingModel } from '../../model/hiking-model';
-import { CoordinatesModel } from '../../model/coordinates-model';
+import { Hike } from '../../model/hike';
+import { Steps } from '../../model/steps';
+import { Point } from '../../model/point';
 
 @Component({
   selector: 'page-list',
@@ -10,45 +11,21 @@ import { CoordinatesModel } from '../../model/coordinates-model';
 })
 export class HikingsList {
 
-  public hikings: Array<HikingModel>;
-
-  private icons: string[];
-
-  private items: Array<{title: string, note: string, icon: string}>;
+  public hikes : Array<Hike>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-    this.items = [];
-    for(let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
-    this.hikings = [
-      new HikingModel('hiking1', {
-        latitude: 101.43,
-        longitude: 118.10
-      }, {
-        latitude: 231.23,
-        longitude: 120.12
-      }, new CoordinatesModel()),
-      
-      new HikingModel('hiking2', {
-        latitude: 231.23,
-        longitude: 120.12
-      }, {
-        latitude: 101.43,
-        longitude: 118.10
-      }, new CoordinatesModel()),
+    // test data set
+    let testSteps = new Steps();
+    testSteps.add("step 1", 150.23, 180.46);
+    testSteps.add("step 2", 200.55, 170.56);
+    this.hikes = [
+      new Hike('hiking1', new Point('start', 230, 145.67), new Point('end', 210, 136), testSteps),
+      new Hike('hiking2', new Point('start', 230, 145.67), new Point('end', 210, 136), new Steps())
   ];
 }
 
   itemTapped(evt, item, hiking) {
     this.navCtrl.push(HikingDetails, {
-      item: item,
       hiking: hiking
     });
   }

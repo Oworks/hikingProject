@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from  'rxjs/Observable';
+import { Hike } from '../model/hike';
 
 /*
   Generated class for the DataRecoveyProvider provider.
@@ -11,21 +11,21 @@ import { Observable } from  'rxjs/Observable';
 @Injectable()
 export class DataRecoveyProvider {
 
-  apiUrl = 'https://www.data.gouv.fr/fr/datasets/r/982d8640-faf8-4fdc-a5de-6e6bad1148f0';
+      apiUrl = 'https://www.data.gouv.fr/fr/datasets/r/982d8640-faf8-4fdc-a5de-6e6bad1148f0';
 
-  constructor(public http: HttpClient) {
-    console.log('Hello DataRecoveyProvider Provider');
-  }
+      constructor(public http: HttpClient) {
+        console.log('Hello DataRecoveyProvider Provider');
+      }
 
 
-  getAll() {
-  return new Promise(resolve => {
-    this.http.get(this.apiUrl).subscribe( (data) => {
-      resolve(data);
-    }, err => {
-      console.log(err);
-    });
-  });
-}
+      getAll() {
+      return new Promise(resolve => {
+        this.http.get(this.apiUrl).subscribe( (data) => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+    }
 
 }

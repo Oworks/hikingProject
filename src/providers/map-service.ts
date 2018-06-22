@@ -1,28 +1,54 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Steps } from '../model/steps';
 
 declare var google;
 
 /**
  * Maps service
- * handle geolocation and hikings management
+ * handle geolocation and steps management
  */
 @Injectable()
 export class MapService {
 
     private _map;
 
-    private _routeService;
+    private _tripDisplay;
+    private _dirService;
 
     constructor(private _geolocation : Geolocation) { 
-        this._routeService = new google.maps.DirectionsService();
+        this._tripDisplay = new google.maps.DirectionsRenderer();
+        this._dirService = new google.maps.DirectionsService();
     }
 
     /**
-     * Start watching position
+     * Add steps cursors
+     * @param steps steps to add
      * @return service instance
      */
-    watch() : MapService {
+    public steps(steps : Steps, dep : any, arr : any) : MapService {
+        if (this._map) {
+            this._tripDisplay.setMap(this._map);
+            this._dirService.route({
+                origin: new google.maps.LatLng(dep.latitude, dep.longitude),
+                destination: new google.maps.LatLng(arr.latitude, arr.longitude),
+                travelMode: 'WALKING'
+            }, function(res, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    this._tripDisplay.setDirections(res);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+        return this;
+    }
+
+    /**
+     * Start watching user position
+     * @return service instance
+     */
+    public watch() : MapService {
         if (this._map) {
             let infos =  new google.maps.InfoWindow({
                 map: this._map
@@ -42,30 +68,23 @@ export class MapService {
     }
 
     /**
-     * Generate trip tracker 
-     * @param map element to bind
+     * Instanciate the map
+     * @param map html element to bind
      * @param dep start position
-     * @param end end position
      * @return service instance
      */
-    track(map: ElementRef, dep: any, end: any) : MapService {
-        const endPos = new google.maps.LatLng(end.latitude, end.longitude);
-        const startPos = new google.maps.LatLng(dep.latitude, dep.longitude);
+    public init(map: ElementRef, dep: any) : MapService {
+        if (!navigator.geolocation) {
+            window.alert("Error : geolocation not enabled");
+            return;
+        }
         this._map = new google.maps.Map(map.nativeElement, {
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            center: startPos,
-            zoom: 10
-        });
-        let dirs = new google.maps.DirectionsRenderer();
-        dirs.setMap(this._map);
-        this._routeService.route({
-            travelMode: 'WALKING',
-            origin: startPos,
-            destination: endPos
-        }, function(res, status) {
-            if (status == 'OK') {
-                dirs.setDirections(res);
-            }
+            zoom: 15,
+            center: {
+                lat: dep.latitude,
+                lng: dep.longitude
+            },
+            mapTypeId: 'ROADMAP'
         });
         return this;
     }

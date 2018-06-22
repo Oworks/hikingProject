@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { HikingModel } from '../../model/hiking-model';
+import { Hike } from '../../model/hike';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { HikingModel } from '../../model/hiking-model';
 })
 export class HikingDetails {
 
-  public selectedItem: HikingModel;
+  public selectedItem: Hike;
   
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.selectedItem = navParams.get('hiking');
