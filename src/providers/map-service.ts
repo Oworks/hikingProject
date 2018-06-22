@@ -80,7 +80,7 @@ export class MapService {
      * @return service instance
      */
     private unmark(coords : Coords) : MapService {
-        this._points = this._points.filter(p => p.coords === coords);
+        this._points = this._points.filter(p => p.coords !== coords);
         return this;
     }
 
