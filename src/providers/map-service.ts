@@ -1,6 +1,8 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Steps } from '../model/steps';
+import { Point } from '../model/point';
+import { Coords } from '../model/coords';
 
 declare var google;
 
@@ -13,12 +15,29 @@ export class MapService {
 
     private _map;
 
-    private _tripDisplay;
-    private _dirService;
+    private _points : Point[];
 
-    constructor(private _geolocation : Geolocation) { 
-        this._tripDisplay = new google.maps.DirectionsRenderer();
-        this._dirService = new google.maps.DirectionsService();
+    constructor(private _geolocation : Geolocation) {
+        this._points = [];
+    }
+
+    /**
+     * Instanciate the map
+     * @param map html element to bind
+     * @param dep start position
+     * @return service instance
+     */
+    public init(map : ElementRef, dep : Point) : MapService {
+        if (!window.navigator.geolocation) {
+            window.alert("Error : geolocation not enabled");
+            return;
+        }
+        this._map = new google.maps.Map(map.nativeElement, {
+            zoom: 15,
+            center: dep.coords.googleCoords(),
+            mapTypeId: 'ROADMAP'
+        });
+        return this;
     }
 
     /**
@@ -26,20 +45,10 @@ export class MapService {
      * @param steps steps to add
      * @return service instance
      */
-    public steps(steps : Steps, dep : any, arr : any) : MapService {
+    public steps(steps : Steps, dep : Point, arr : Point) : MapService {
         if (this._map) {
-            this._tripDisplay.setMap(this._map);
-            this._dirService.route({
-                origin: new google.maps.LatLng(dep.latitude, dep.longitude),
-                destination: new google.maps.LatLng(arr.latitude, arr.longitude),
-                travelMode: 'WALKING'
-            }, function(res, status) {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    this._tripDisplay.setDirections(res);
-                } else {
-                    window.alert('Directions request failed due to ' + status);
-                }
-            });
+            this.mark(dep).mark(arr);
+            steps.points.forEach(p => this.mark(p));
         }
         return this;
     }
@@ -50,17 +59,14 @@ export class MapService {
      */
     public watch() : MapService {
         if (this._map) {
-            let infos =  new google.maps.InfoWindow({
-                map: this._map
-            });
             const watcher = this._geolocation.watchPosition();
+            let infos = new google.maps.InfoWindow({ map: this._map });
+
             watcher.subscribe(data => {
-                const pos = {
-                    lng: data.coords.longitude,
-                    lat: data.coords.latitude
-                }
-                this._map.setCenter(pos);
-                infos.setPosition(pos);
+                let pos = new Coords(data.coords.latitude, data.coords.longitude);
+                this.unmark(pos);
+                this._map.setCenter(pos.googleCoords());
+                infos.setPosition(pos.googleCoords());
                 infos.setContent('You are here');
             });
         }
@@ -68,24 +74,28 @@ export class MapService {
     }
 
     /**
-     * Instanciate the map
-     * @param map html element to bind
-     * @param dep start position
+     * Check if the user is on a marker, if he is
+     * then it's deleted
+     * @param coords current user position
      * @return service instance
      */
-    public init(map: ElementRef, dep: any) : MapService {
-        if (!navigator.geolocation) {
-            window.alert("Error : geolocation not enabled");
-            return;
-        }
-        this._map = new google.maps.Map(map.nativeElement, {
-            zoom: 15,
-            center: {
-                lat: dep.latitude,
-                lng: dep.longitude
-            },
-            mapTypeId: 'ROADMAP'
+    private unmark(coords : Coords) : MapService {
+        this._points = this._points.filter(p => p.coords === coords);
+        return this;
+    }
+
+    /**
+     * Add a marker on the map
+     * @param location point to add
+     * @return service instance
+     */
+    private mark(location : Point) : MapService {
+        location.marker = new google.maps.Marker({
+            map: this._map,
+            position: location.coords.googleCoords(),
+            title: location.desc
         });
+        this._points.push(location);
         return this;
     }
 }

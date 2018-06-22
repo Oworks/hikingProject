@@ -1,11 +1,12 @@
 import { Point } from "./point";
+import { Coords } from "./coords";
 
 /**
  * Describe the points set for an hike
  */
 export class Steps {
 
-    public points : Array<Point>;
+    public points : Point[];
   
     constructor() {
         this.points = [];
@@ -18,8 +19,8 @@ export class Steps {
      * @param longitude 
      */
     public add(desc: string, latitude: number, longitude: number) : void {
-        const p = new Point(desc, latitude, longitude);
-        this.points.push(p);
+        const point = new Point(desc, latitude, longitude);
+        this.points.push(point);
     }
 
     /**

@@ -10,10 +10,6 @@ export class Hike {
   public description : string;
 
   constructor(public name: string, public start: Point, public end: Point, public steps: Steps) {
-    this.name = name;
-    this.start = start;
-    this.end = end;
-    this.steps = steps;
     this.describe();
   }
 
