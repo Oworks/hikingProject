@@ -4,6 +4,7 @@ import { HikingDetails } from '../hiking-details/hiking-details';
 import { HikingModel } from '../../model/hiking-model';
 import { CoordinatesModel } from '../../model/coordinates-model';
 
+
 @Component({
   selector: 'page-list',
   templateUrl: 'hikings-list.html'
@@ -35,7 +36,7 @@ export class HikingsList {
         latitude: 231.23,
         longitude: 120.12
       }, new CoordinatesModel()),
-      
+
       new HikingModel('hiking2', {
         latitude: 231.23,
         longitude: 120.12
