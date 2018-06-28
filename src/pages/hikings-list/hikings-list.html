@@ -21,7 +21,7 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let hike of hikes" (click)="itemTapped($event, item, hike)">
+    <button ion-item *ngFor="let hike of hikes" (click)="itemTapped($event, hike)">
       {{ hike.name }}
     </button>
   </ion-list>

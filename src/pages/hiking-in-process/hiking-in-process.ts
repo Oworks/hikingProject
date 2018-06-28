@@ -19,15 +19,17 @@ export class HikingInProcess {
       this._item = navParams.get('item');
     }
 
+    /**
+     * Start geolocation and set up steps markers if needed
+     */
     public ngAfterViewInit() : void {
       const item = this._item;
       this._mapService.init(this.map, item.start);
-
       if (item.steps.isEmpty()) {
         this._mapService.watch();
       } else {
         this._mapService
-          .steps(item.steps, item.start, item.end)
+          .travel(item.steps, item.start, item.end)
           .watch();
       }
     }

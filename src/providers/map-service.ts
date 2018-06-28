@@ -29,27 +29,38 @@ export class MapService {
      */
     public init(map : ElementRef, dep : Point) : MapService {
         if (!window.navigator.geolocation) {
-            window.alert("Error : geolocation not enabled");
+            window.alert('Error : geolocation not enabled');
             return;
         }
         this._map = new google.maps.Map(map.nativeElement, {
             zoom: 15,
-            center: dep.coords.googleCoords(),
-            mapTypeId: 'ROADMAP'
+            center: dep.coords.googleCoords,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         });
         return this;
     }
 
     /**
-     * Add steps cursors
+     * Set travel options
      * @param steps steps to add
      * @return service instance
      */
-    public steps(steps : Steps, dep : Point, arr : Point) : MapService {
-        if (this._map) {
-            this.mark(dep).mark(arr);
-            steps.points.forEach(p => this.mark(p));
+    public travel(steps : Steps, dep : Point, arr : Point) : MapService {
+        const dirService = new google.maps.DirectionsService();
+        const dirRenderer = new google.maps.DirectionsRenderer();
+        const opts = {
+            origin: dep.coords.googleCoords,
+            destination: arr.coords.googleCoords,
+            waypoints: this.buildWaypoints(steps),
+            travelMode: 'WALKING'
         }
+        dirService.route(opts, (res, status) => {
+            if (status === 'OK') {
+                dirRenderer.setDirections(res);
+            } else {
+                console.log(status);
+            }
+        });
         return this;
     }
 
@@ -60,13 +71,11 @@ export class MapService {
     public watch() : MapService {
         if (this._map) {
             const watcher = this._geolocation.watchPosition();
-            let infos = new google.maps.InfoWindow({ map: this._map });
-
+            const infos = new google.maps.InfoWindow({ map: this._map });
             watcher.subscribe(data => {
                 let pos = new Coords(data.coords.latitude, data.coords.longitude);
-                this.unmark(pos);
-                this._map.setCenter(pos.googleCoords());
-                infos.setPosition(pos.googleCoords());
+                this._map.setCenter(pos.googleCoords);
+                infos.setPosition(pos.googleCoords);
                 infos.setContent('You are here');
             });
         }
@@ -74,28 +83,18 @@ export class MapService {
     }
 
     /**
-     * Check if the user is on a marker, if he is
-     * then it's deleted
-     * @param coords current user position
-     * @return service instance
+     * Build waypoints array for google api
+     * @param steps points to add
+     * @return waypoints array
      */
-    private unmark(coords : Coords) : MapService {
-        this._points = this._points.filter(p => p.coords !== coords);
-        return this;
-    }
-
-    /**
-     * Add a marker on the map
-     * @param location point to add
-     * @return service instance
-     */
-    private mark(location : Point) : MapService {
-        location.marker = new google.maps.Marker({
-            map: this._map,
-            position: location.coords.googleCoords(),
-            title: location.desc
+    private buildWaypoints(steps: Steps) {
+        const waypoints = [];
+        steps.points.forEach(p => {
+            waypoints.push({
+                location: p.coords.googleCoords,
+                stopover: true
+            });
         });
-        this._points.push(location);
-        return this;
+        return waypoints;
     }
 }

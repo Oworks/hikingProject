@@ -3,16 +3,15 @@
  */
 export class Coords {
 
-    constructor(public latitude : number, public longitude : number) {}
-
     /**
-     * Get coords formated for google api
-     * @return an object with lat and lng properties
+     * Coords formated for google api
      */
-    public googleCoords() : any {
-        return {
-            lat: this.latitude,
-            lng: this.longitude
+    public googleCoords : object;
+
+    constructor(public latitude : number, public longitude : number) {
+        this.googleCoords = {
+            lat: latitude,
+            lng: longitude
         }
     }
 }

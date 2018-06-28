@@ -11,22 +11,22 @@ import { Point } from '../../model/point';
 })
 export class HikingsList {
 
-  public hikes : Array<Hike>;
+  public hikes : Hike[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     // test data set
     let testSteps = new Steps();
-    testSteps.add("step 1", 150.23, 180.46);
-    testSteps.add("step 2", 200.55, 170.56);
+    testSteps.add('step 1', 150.23, 180.46);
+    testSteps.add('step 2', 200.55, 170.56);
     this.hikes = [
       new Hike('hiking1', new Point('start', 230, 145.67), new Point('end', 210, 136), testSteps),
       new Hike('hiking2', new Point('start', 230, 145.67), new Point('end', 210, 136), new Steps())
   ];
 }
 
-  itemTapped(evt, item, hiking) {
+  itemTapped(evt, hike : Hike) {
     this.navCtrl.push(HikingDetails, {
-      hiking: hiking
+      item: hike
     });
   }
 }

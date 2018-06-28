@@ -22,7 +22,7 @@ webpackEmptyAsyncContext.id = 114;
 
 var map = {
 	"../pages/hiking-in-process/hiking-in-process.module": [
-		284,
+		285,
 		0
 	]
 };
@@ -42,17 +42,41 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 196:
+/***/ 157:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Coords; });
+/**
+ * Describe coordinates
+ */
+var Coords = (function () {
+    function Coords(latitude, longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.googleCoords = {
+            lat: latitude,
+            lng: longitude
+        };
+    }
+    return Coords;
+}());
+
+//# sourceMappingURL=coords.js.map
+
+/***/ }),
+
+/***/ 197:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HikingsList; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hiking_details_hiking_details__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_hike__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__model_steps__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_point__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hiking_details_hiking_details__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_hike__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__model_steps__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_point__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -74,21 +98,21 @@ var HikingsList = (function () {
         this.navParams = navParams;
         // test data set
         var testSteps = new __WEBPACK_IMPORTED_MODULE_4__model_steps__["a" /* Steps */]();
-        testSteps.add("step 1", 150.23, 180.46);
-        testSteps.add("step 2", 200.55, 170.56);
+        testSteps.add('step 1', 150.23, 180.46);
+        testSteps.add('step 2', 200.55, 170.56);
         this.hikes = [
             new __WEBPACK_IMPORTED_MODULE_3__model_hike__["a" /* Hike */]('hiking1', new __WEBPACK_IMPORTED_MODULE_5__model_point__["a" /* Point */]('start', 230, 145.67), new __WEBPACK_IMPORTED_MODULE_5__model_point__["a" /* Point */]('end', 210, 136), testSteps),
             new __WEBPACK_IMPORTED_MODULE_3__model_hike__["a" /* Hike */]('hiking2', new __WEBPACK_IMPORTED_MODULE_5__model_point__["a" /* Point */]('start', 230, 145.67), new __WEBPACK_IMPORTED_MODULE_5__model_point__["a" /* Point */]('end', 210, 136), new __WEBPACK_IMPORTED_MODULE_4__model_steps__["a" /* Steps */]())
         ];
     }
-    HikingsList.prototype.itemTapped = function (evt, item, hiking) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__hiking_details_hiking_details__["a" /* HikingDetails */], {
-            hiking: hiking
+    HikingsList.prototype.itemTapped = function (evt, hike) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__hiking_details_hiking_details__["HikingDetails"], {
+            item: hike
         });
     };
     HikingsList = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-list',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hikings-list/hikings-list.html"*/`<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hikings management</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<!-- <ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon name="{{item.icon}}" item-left></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-right>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n</ion-content> -->\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let hike of hikes" (click)="itemTapped($event, item, hike)">\n      {{ hike.name }}\n    </button>\n  </ion-list>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hikings-list/hikings-list.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hikings-list/hikings-list.html"*/`<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hikings management</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<!-- <ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon name="{{item.icon}}" item-left></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-right>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n</ion-content> -->\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let hike of hikes" (click)="itemTapped($event, hike)">\n      {{ hike.name }}\n    </button>\n  </ion-list>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hikings-list/hikings-list.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
     ], HikingsList);
@@ -99,11 +123,11 @@ var HikingsList = (function () {
 
 /***/ }),
 
-/***/ 197:
+/***/ 198:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HikingDetails; });
+/* unused harmony export HikeDetails */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(40);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -117,47 +141,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var HikingDetails = (function () {
-    function HikingDetails(navCtrl, navParams) {
+var HikeDetails = (function () {
+    function HikeDetails(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.selectedItem = navParams.get('hiking');
+        this.selectedItem = navParams.get('item');
     }
-    HikingDetails.prototype.openHikingInProcess = function () {
+    HikeDetails.prototype.openHikingInProcess = function () {
         this.navCtrl.push('HikingInProcess', {
             item: this.selectedItem
         });
     };
-    HikingDetails = __decorate([
+    HikeDetails = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-item-details',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hiking-details/hiking-details.html"*/`<ion-header>\n  <ion-navbar>\n    <button menuToggle *ngIf="!selectedItem">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hiking Details</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div text-center *ngIf="selectedItem">\n    <h3> {{ selectedItem.name }} </h3>\n    <p> {{ selectedItem.description }} </p>\n  </div>\n  \n  <div text-center>\n    <button ion-button (click)=\'openHikingInProcess()\' color="dark">Start hiking</button>\n  </div>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hiking-details/hiking-details.html"*/
+            selector: 'page-item-details',
+            templateUrl: 'hike-details.html'
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
-    ], HikingDetails);
-    return HikingDetails;
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object])
+    ], HikeDetails);
+    return HikeDetails;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=hiking-details.js.map
 
 /***/ }),
 
-/***/ 198:
+/***/ 199:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Point; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coords__ = __webpack_require__(157);
+
 /**
  * Describe an hike point on the map
  */
 var Point = (function () {
     function Point(desc, latitude, longitude) {
         this.desc = desc;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.desc = desc;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.coords = new __WEBPACK_IMPORTED_MODULE_0__coords__["a" /* Coords */](latitude, longitude);
     }
+    Point.prototype.equals = function (other) {
+        return other.coords === this.coords
+            && other.desc === this.desc;
+    };
     return Point;
 }());
 
@@ -165,13 +193,14 @@ var Point = (function () {
 
 /***/ }),
 
-/***/ 226:
+/***/ 227:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_coords__ = __webpack_require__(157);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -183,6 +212,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 /**
  * Maps service
  * handle geolocation and steps management
@@ -190,22 +220,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var MapService = (function () {
     function MapService(_geolocation) {
         this._geolocation = _geolocation;
-        this._markers = [];
+        this._points = [];
     }
     /**
-     * Add steps cursors
+     * Instanciate the map
+     * @param map html element to bind
+     * @param dep start position
+     * @return service instance
+     */
+    MapService.prototype.init = function (map, dep) {
+        if (!window.navigator.geolocation) {
+            window.alert('Error : geolocation not enabled');
+            return;
+        }
+        this._map = new google.maps.Map(map.nativeElement, {
+            zoom: 15,
+            center: dep.coords.googleCoords,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        return this;
+    };
+    /**
+     * Set travel options
      * @param steps steps to add
      * @return service instance
      */
-    MapService.prototype.steps = function (steps, dep, arr) {
-        var _this = this;
-        if (this._map) {
-            this.mark(dep);
-            this.mark(arr);
-            steps.points.forEach(function (p) {
-                _this.mark(p);
-            });
-        }
+    MapService.prototype.travel = function (steps, dep, arr) {
+        var dirService = new google.maps.DirectionsService();
+        var dirRenderer = new google.maps.DirectionsRenderer();
+        var opts = {
+            origin: dep.coords.googleCoords,
+            destination: arr.coords.googleCoords,
+            waypoints: this.buildWaypoints(steps),
+            travelMode: 'WALKING'
+        };
+        dirService.route(opts, function (res, status) {
+            if (status === 'OK') {
+                dirRenderer.setDirections(res);
+            }
+            else {
+                console.log(status);
+            }
+        });
         return this;
     };
     /**
@@ -215,71 +271,31 @@ var MapService = (function () {
     MapService.prototype.watch = function () {
         var _this = this;
         if (this._map) {
-            var infos_1 = new google.maps.InfoWindow({
-                map: this._map
-            });
             var watcher = this._geolocation.watchPosition();
+            var infos_1 = new google.maps.InfoWindow({ map: this._map });
             watcher.subscribe(function (data) {
-                var pos = {
-                    lng: data.coords.longitude,
-                    lat: data.coords.latitude
-                };
-                _this._map.setCenter(pos);
-                infos_1.setPosition(pos);
+                var pos = new __WEBPACK_IMPORTED_MODULE_2__model_coords__["a" /* Coords */](data.coords.latitude, data.coords.longitude);
+                _this._map.setCenter(pos.googleCoords);
+                infos_1.setPosition(pos.googleCoords);
                 infos_1.setContent('You are here');
             });
         }
         return this;
     };
     /**
-     * Instanciate the map
-     * @param map html element to bind
-     * @param dep start position
-     * @return service instance
+     * Build waypoints array for google api
+     * @param steps points to add
+     * @return waypoints array
      */
-    MapService.prototype.init = function (map, dep) {
-        if (!window.navigator.geolocation) {
-            window.alert("Error : geolocation not enabled");
-            return;
-        }
-        var coords = {
-            lat: dep.latitude,
-            lng: dep.longitude
-        };
-        this._map = new google.maps.Map(map.nativeElement, {
-            zoom: 15,
-            center: coords,
-            mapTypeId: 'ROADMAP'
+    MapService.prototype.buildWaypoints = function (steps) {
+        var waypoints = [];
+        steps.points.forEach(function (p) {
+            waypoints.push({
+                location: p.coords.googleCoords,
+                stopover: true
+            });
         });
-        return this;
-    };
-    /**
-     * Add a marker on the map
-     * @param location point to add
-     */
-    MapService.prototype.mark = function (location) {
-        var coords = {
-            lat: location.latitude,
-            lng: location.longitude
-        };
-        this._markers.push(new google.maps.Marker({
-            map: this._map,
-            position: coords,
-            title: location.desc
-        }));
-    };
-    /**
-     * Remove a marker from the map
-     * @param location point to remove
-     */
-    MapService.prototype.unmark = function (location) {
-        var coords = {
-            lat: location.latitude,
-            lng: location.longitude
-        };
-        if (this._markers.includes(location)) {
-            this._markers = this._markers.filter(function (p) { return p !== location; });
-        }
+        return waypoints;
     };
     MapService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -292,13 +308,13 @@ var MapService = (function () {
 
 /***/ }),
 
-/***/ 231:
+/***/ 232:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(237);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -306,7 +322,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 236:
+/***/ 237:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -314,14 +330,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_hikings_list_hikings_list__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_hikings_list_hikings_list__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_map_service__ = __webpack_require__(226);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_data_recovery__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_map_service__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_data_recovery__ = __webpack_require__(283);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -346,7 +362,7 @@ var AppModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__["a" /* HikingDetails */],
+                __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__["HikingDetails"],
                 __WEBPACK_IMPORTED_MODULE_5__pages_hikings_list_hikings_list__["a" /* HikingsList */]
             ],
             imports: [
@@ -360,7 +376,7 @@ var AppModule = (function () {
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__["a" /* HikingDetails */],
+                __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__["HikingDetails"],
                 __WEBPACK_IMPORTED_MODULE_5__pages_hikings_list_hikings_list__["a" /* HikingsList */]
             ],
             providers: [
@@ -380,16 +396,16 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 279:
+/***/ 280:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_hikings_list_hikings_list__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_hikings_list_hikings_list__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(201);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -452,7 +468,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -467,20 +483,16 @@ var Hike = (function () {
         this.start = start;
         this.end = end;
         this.steps = steps;
-        this.name = name;
-        this.start = start;
-        this.end = end;
-        this.steps = steps;
-        this.describe();
     }
     /**
      * Format description of the hike using coordinates
+     * @return description
      */
     Hike.prototype.describe = function () {
         var get = function (coords) {
-            return 'Latitude : ' + coords.latitude + ' - Longitude : ' + coords.longitude;
+            return "lat : " + coords.latitude + " - long : " + coords.longitude;
         };
-        this.description = 'FROM ' + get(this.start) + ' TO ' + get(this.end);
+        return "FROM " + get(this.start.coords) + " TO " + get(this.end.coords);
     };
     return Hike;
 }());
@@ -489,12 +501,12 @@ var Hike = (function () {
 
 /***/ }),
 
-/***/ 281:
+/***/ 282:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Steps; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__point__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__point__ = __webpack_require__(199);
 
 /**
  * Describe the points set for an hike
@@ -510,11 +522,12 @@ var Steps = (function () {
      * @param longitude
      */
     Steps.prototype.add = function (desc, latitude, longitude) {
-        var p = new __WEBPACK_IMPORTED_MODULE_0__point__["a" /* Point */](desc, latitude, longitude);
-        this.points.push(p);
+        var point = new __WEBPACK_IMPORTED_MODULE_0__point__["a" /* Point */](desc, latitude, longitude);
+        this.points.push(point);
     };
     /**
-     * Get a bool to know if there's step points in this object
+     * Is the steps array empty
+     * @return bool value
      */
     Steps.prototype.isEmpty = function () {
         return this.points.length === 0;
@@ -526,12 +539,12 @@ var Steps = (function () {
 
 /***/ }),
 
-/***/ 282:
+/***/ 283:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DataRecoveyProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -577,5 +590,5 @@ var DataRecoveyProvider = (function () {
 
 /***/ })
 
-},[231]);
+},[232]);
 //# sourceMappingURL=main.js.map

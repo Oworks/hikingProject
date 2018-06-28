@@ -1,5 +1,4 @@
 import { Point } from "./point";
-import { Coords } from "./coords";
 
 /**
  * Describe the points set for an hike
@@ -24,7 +23,8 @@ export class Steps {
     }
 
     /**
-     * Get a bool to know if there's step points in this object
+     * Is the steps array empty
+     * @return bool value
      */
     public isEmpty() : boolean {
         return this.points.length === 0;

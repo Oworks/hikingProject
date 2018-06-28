@@ -7,19 +7,16 @@ import { Point } from "./point";
  */
 export class Hike {
 
-  public description : string;
-
-  constructor(public name: string, public start: Point, public end: Point, public steps: Steps) {
-    this.describe();
-  }
+  constructor(public name: string, public start: Point, public end: Point, public steps: Steps) {}
 
   /**
    * Format description of the hike using coordinates
+   * @return description
    */
-  private describe() : void {
+  public describe() : string {
     const get = coords => {
-      return 'Latitude : ' + coords.latitude + ' - Longitude : ' + coords.longitude;
+      return `lat : ${coords.latitude} - long : ${coords.longitude}`;
     }
-    this.description = 'FROM ' + get(this.start) + ' TO ' + get(this.end);
+    return `FROM ${get(this.start.coords)} TO ${get(this.end.coords)}`;
   }
 }
