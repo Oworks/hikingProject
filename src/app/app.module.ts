@@ -8,15 +8,9 @@ import { HikeInProcess } from '../pages/hike-in-process/hike-in-process';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
-<<<<<<< HEAD
-import { MapService } from '../providers/map-service';
-import { DataRecoveyProvider } from '../providers/data-recovery';
-import { HttpClientModule } from '@angular/common/http';
-=======
 import { MapService } from '../services/map-service';
 import { OpenDataService } from '../services/opendata-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
->>>>>>> hiking_steps
 
 @NgModule({
   declarations: [
@@ -27,13 +21,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-<<<<<<< HEAD
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-=======
-    HttpClientModule,
-    IonicModule.forRoot(MyApp)
->>>>>>> hiking_steps
   ],
   bootstrap: [IonicApp],
   entryComponents: [
