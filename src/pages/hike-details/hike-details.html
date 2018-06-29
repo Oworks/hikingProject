@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!selectedItem">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Hike details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div text-center *ngIf="selectedItem">
+    <h3> {{ selectedItem.name }} </h3>
+    <p> {{ selectedItem.describe() }} </p>
+  </div>
+  
+  <div text-center>
+    <button ion-button (click)='start($evt)' color="dark">Start</button>
+  </div>
+</ion-content>

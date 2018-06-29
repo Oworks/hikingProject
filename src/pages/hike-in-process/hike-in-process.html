@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Hike started</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1>{{ item.name }}</h1>
+  <h4>Timer &nbsp; {{ timerService.current() }}</h4> &nbsp;
+  <button ion-button small round (click)="startTimer($event)">Start</button>
+  <button ion-button small round (click)="stopTimer($event)">Stop</button>
+  <button ion-button small round (click)="resetTimer($event)">Reset</button>
+  <br/> <br/> <br/>
+  <div #map id="map"></div>
+
+</ion-content>
