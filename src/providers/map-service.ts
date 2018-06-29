@@ -29,7 +29,7 @@ export class MapService {
             return;
         }
         this._map = new google.maps.Map(map.nativeElement, {
-            zoom: 15,
+            zoom: 5,
             center: dep.coords.googleCoords,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });

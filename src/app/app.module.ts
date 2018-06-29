@@ -12,6 +12,7 @@ import { MapService } from '../providers/map-service';
 import { OpenDataService } from '../providers/opendata-service';
 import { TimerService } from '../providers/timer-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    PipesModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
   ],

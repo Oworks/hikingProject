@@ -5,8 +5,6 @@ import { Coords } from "./coords";
  */
 export class Point {
 
-    public marker : any;
-
     public coords : Coords;
 
     constructor(public desc : string, latitude : number, longitude : number) {

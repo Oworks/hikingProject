@@ -165,15 +165,6 @@ var HikeInProcess = (function () {
         this._mapService = _mapService;
         this.item = navParams.get('item');
     }
-    HikeInProcess.prototype.startTimer = function () {
-        this.timerService.start();
-    };
-    HikeInProcess.prototype.stopTimer = function () {
-        this.timerService.stop();
-    };
-    HikeInProcess.prototype.resetTimer = function () {
-        this.timerService.reset();
-    };
     /**
      * Start geolocation and set up steps markers if needed
      */
@@ -195,13 +186,22 @@ var HikeInProcess = (function () {
         this.timerService.stop();
         this.timerService.reset();
     };
+    HikeInProcess.prototype.startTimer = function () {
+        this.timerService.start();
+    };
+    HikeInProcess.prototype.stopTimer = function () {
+        this.timerService.stop();
+    };
+    HikeInProcess.prototype.resetTimer = function () {
+        this.timerService.reset();
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
     ], HikeInProcess.prototype, "map", void 0);
     HikeInProcess = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-hike-in-process',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/`<ion-header>\n\n  <ion-navbar>\n    <ion-title>Hike started</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h1>{{ item.name }}</h1>\n  <h4>Timer &nbsp; {{ timerService.current() }}</h4> &nbsp;\n  <button ion-button small round (click)="startTimer($event)">Start</button>\n  <button ion-button small round (click)="stopTimer($event)">Stop</button>\n  <button ion-button small round (click)="resetTimer($event)">Reset</button>\n  <br/> <br/> <br/>\n  <div #map id="map"></div>\n\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/,
+            selector: 'page-hike-in-process',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/`<ion-header>\n\n  <ion-navbar>\n    <ion-title>Hike started</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h1>{{ item.name }}</h1>\n  <h4>Timer &nbsp; {{ timerService.current() | timer }}</h4> &nbsp;\n  <button ion-button small round (click)="startTimer($event)">Start</button>\n  <button ion-button small round (click)="stopTimer($event)">Stop</button>\n  <button ion-button small round (click)="resetTimer($event)">Reset</button>\n  <br/> <br/> <br/>\n  <div #map id="map"></div>\n\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_timer_service__["a" /* TimerService */],
             __WEBPACK_IMPORTED_MODULE_2__providers_map_service__["a" /* MapService */]])
@@ -253,7 +253,7 @@ var MapService = (function () {
             return;
         }
         this._map = new google.maps.Map(map.nativeElement, {
-            zoom: 15,
+            zoom: 5,
             center: dep.coords.googleCoords,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
@@ -451,7 +451,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var OpenDataService = (function () {
     function OpenDataService(_httpClient) {
         this._httpClient = _httpClient;
-        this._url = 'https://geo.data.gouv.fr/api/geogw/file-packages/330f16f0c3db9aeaee868ca26777e20dfa189e65/download?format=GeoJSON&projection=WGS84';
+        this._URL = 'https://geo.data.gouv.fr/api/geogw/file-packages/330f16f0c3db9aeaee868ca26777e20dfa189e65/download?format=GeoJSON&projection=WGS84';
     }
     /**
      * Fetch and parse data
@@ -461,7 +461,7 @@ var OpenDataService = (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             var hikes = [];
-            _this._httpClient.get(_this._url).subscribe(function (data) {
+            _this._httpClient.get(_this._URL).subscribe(function (data) {
                 _this.parse(data, hikes);
                 resolve(hikes);
             }, function (err) { return reject(err); });
@@ -480,6 +480,8 @@ var OpenDataService = (function () {
             var start = new __WEBPACK_IMPORTED_MODULE_4__model_point__["a" /* Point */]('start', coords[0][1], coords[0][0]);
             var end = new __WEBPACK_IMPORTED_MODULE_4__model_point__["a" /* Point */]('end', coords[Math.ceil((coords.length - 1) / 2)][1], coords[Math.ceil((coords.length - 1) / 2)][0]);
             steps.add('step', coords[Math.ceil((coords.length - 1) / 4)][1], coords[Math.ceil((coords.length - 1) / 4)][0]);
+            if (!name || !coords || !start || !end)
+                return;
             hikes.push(new __WEBPACK_IMPORTED_MODULE_2__model_hike__["a" /* Hike */](name, start, end, steps));
         });
     };
@@ -558,12 +560,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_opendata_service__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_timer_service__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_common_http__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pipes_pipes_module__ = __webpack_require__(287);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -591,6 +595,7 @@ var AppModule = (function () {
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
+                __WEBPACK_IMPORTED_MODULE_14__pipes_pipes_module__["a" /* PipesModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: []
                 }),
@@ -719,7 +724,7 @@ var Hike = (function () {
      */
     Hike.prototype.describe = function () {
         var get = function (coords) {
-            return "lat : " + coords.latitude + " - long : " + coords.longitude;
+            return "lat : " + parseFloat(coords.latitude).toFixed(2) + " - long : " + parseFloat(coords.longitude).toFixed(2);
         };
         return "FROM " + get(this.start.coords) + " TO " + get(this.end.coords);
     };
@@ -765,6 +770,73 @@ var Steps = (function () {
 }());
 
 //# sourceMappingURL=steps.js.map
+
+/***/ }),
+
+/***/ 287:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PipesModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__timer_timer__ = __webpack_require__(288);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var PipesModule = (function () {
+    function PipesModule() {
+    }
+    PipesModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [__WEBPACK_IMPORTED_MODULE_1__timer_timer__["a" /* TimerPipe */]],
+            imports: [],
+            exports: [__WEBPACK_IMPORTED_MODULE_1__timer_timer__["a" /* TimerPipe */]]
+        })
+    ], PipesModule);
+    return PipesModule;
+}());
+
+//# sourceMappingURL=pipes.module.js.map
+
+/***/ }),
+
+/***/ 288:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TimerPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var TimerPipe = (function () {
+    function TimerPipe() {
+    }
+    TimerPipe.prototype.transform = function (value) {
+        var str = value.split(':');
+        for (var i = 0; i < str.length; i++) {
+            if (str[i].length === 1) {
+                str[i] = "0" + str[i];
+            }
+        }
+        return str[0] + ":" + str[1];
+    };
+    TimerPipe = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* Pipe */])({ name: 'timer' })
+    ], TimerPipe);
+    return TimerPipe;
+}());
+
+//# sourceMappingURL=timer.js.map
 
 /***/ })
 

@@ -8,7 +8,7 @@ exports.config = {
     seleniumAddress: 'http://localhost:4723/wd/hub',
     // Emplacement de nos tests fonctionnels. Nous chargeons ici tous les fichiers présents dans le dossier ./e2e
     // et suffixés par .e2e.js
-    specs: ['./e2e/**/*.e2e.js'],
+    specs: ['./tests/**/*.e2e.js'],
     // Configuration du mobile sur lequel sera exécuté les tests. 
     // Pour ajouter plusieurs cibles, voir : https://github.com/angular/protractor/blob/master/lib/config.ts
     capabilities:

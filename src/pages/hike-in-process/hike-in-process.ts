@@ -20,18 +20,6 @@ export class HikeInProcess {
       this.item = navParams.get('item');
     }
 
-    public startTimer() : void {
-      this.timerService.start();
-    }
-
-    public stopTimer() : void {
-      this.timerService.stop();
-    }
-
-    public resetTimer() : void {
-      this.timerService.reset();
-    }
-
     /**
      * Start geolocation and set up steps markers if needed
      */
@@ -51,6 +39,18 @@ export class HikeInProcess {
      */
     public ngOnDestroy(): void {
       this.timerService.stop();
+      this.timerService.reset();
+    }
+
+    public startTimer() : void {
+      this.timerService.start();
+    }
+
+    public stopTimer() : void {
+      this.timerService.stop();
+    }
+
+    public resetTimer() : void {
       this.timerService.reset();
     }
 }

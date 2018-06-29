@@ -15,7 +15,7 @@ export class Hike {
    */
   public describe() : string {
     const get = coords => {
-      return `lat : ${coords.latitude} - long : ${coords.longitude}`;
+      return `lat : ${parseFloat(coords.latitude).toFixed(2)} - long : ${parseFloat(coords.longitude).toFixed(2)}`;
     }
     return `FROM ${get(this.start.coords)} TO ${get(this.end.coords)}`;
   }

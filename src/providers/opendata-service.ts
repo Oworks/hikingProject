@@ -11,7 +11,7 @@ import { Point } from '../model/point';
 @Injectable()
 export class OpenDataService {
   
-  private _url : string = 'https://geo.data.gouv.fr/api/geogw/file-packages/330f16f0c3db9aeaee868ca26777e20dfa189e65/download?format=GeoJSON&projection=WGS84';
+  private _URL : string = 'https://geo.data.gouv.fr/api/geogw/file-packages/330f16f0c3db9aeaee868ca26777e20dfa189e65/download?format=GeoJSON&projection=WGS84';
 
 
   constructor (private _httpClient: HttpClient) {}
@@ -20,10 +20,10 @@ export class OpenDataService {
    * Fetch and parse data
    * @return promise providing mapped array
    */
-  public fetch(): Promise<Hike[]> {
+  public fetch() : Promise<Hike[]> {
     return new Promise((resolve, reject) => {
       const hikes = [];
-      this._httpClient.get(this._url).subscribe(data => {
+      this._httpClient.get(this._URL).subscribe(data => {
         this.parse(data, hikes);
         resolve(hikes);
       }, err => reject(err));
@@ -45,6 +45,7 @@ export class OpenDataService {
         coords[Math.ceil((coords.length - 1) / 2)][0]);
       steps.add('step', coords[Math.ceil((coords.length - 1) / 4)][1], 
         coords[Math.ceil((coords.length - 1) / 4)][0]);
+      if (!name || !coords || !start || !end) return;
       hikes.push(new Hike(name, start, end, steps));
     });
   } 
