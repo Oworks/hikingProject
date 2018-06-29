@@ -1,6 +1,6 @@
-webpackJsonp([1],{
+webpackJsonp([0],{
 
-/***/ 114:
+/***/ 112:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -13,70 +13,36 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 114;
+webpackEmptyAsyncContext.id = 112;
 
 /***/ }),
 
 /***/ 154:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var map = {
-	"../pages/hiking-in-process/hiking-in-process.module": [
-		285,
-		0
-	]
-};
-function webpackAsyncContext(req) {
-	var ids = map[req];
-	if(!ids)
-		return Promise.reject(new Error("Cannot find module '" + req + "'."));
-	return __webpack_require__.e(ids[1]).then(function() {
-		return __webpack_require__(ids[0]);
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
 	});
-};
-webpackAsyncContext.keys = function webpackAsyncContextKeys() {
-	return Object.keys(map);
-};
-webpackAsyncContext.id = 154;
-module.exports = webpackAsyncContext;
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 154;
 
 /***/ }),
 
-/***/ 157:
+/***/ 194:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Coords; });
-/**
- * Describe coordinates
- */
-var Coords = (function () {
-    function Coords(latitude, longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.googleCoords = {
-            lat: latitude,
-            lng: longitude
-        };
-    }
-    return Coords;
-}());
-
-//# sourceMappingURL=coords.js.map
-
-/***/ }),
-
-/***/ 197:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HikingsList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HikesList; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hiking_details_hiking_details__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_hike__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__model_steps__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_point__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hike_details_hike_details__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_opendata_service__ = __webpack_require__(201);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -90,46 +56,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-var HikingsList = (function () {
-    function HikingsList(navCtrl, navParams) {
+var HikesList = (function () {
+    function HikesList(navCtrl, navParams, dataService) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        // test data set
-        var testSteps = new __WEBPACK_IMPORTED_MODULE_4__model_steps__["a" /* Steps */]();
-        testSteps.add('step 1', 150.23, 180.46);
-        testSteps.add('step 2', 200.55, 170.56);
-        this.hikes = [
-            new __WEBPACK_IMPORTED_MODULE_3__model_hike__["a" /* Hike */]('hiking1', new __WEBPACK_IMPORTED_MODULE_5__model_point__["a" /* Point */]('start', 230, 145.67), new __WEBPACK_IMPORTED_MODULE_5__model_point__["a" /* Point */]('end', 210, 136), testSteps),
-            new __WEBPACK_IMPORTED_MODULE_3__model_hike__["a" /* Hike */]('hiking2', new __WEBPACK_IMPORTED_MODULE_5__model_point__["a" /* Point */]('start', 230, 145.67), new __WEBPACK_IMPORTED_MODULE_5__model_point__["a" /* Point */]('end', 210, 136), new __WEBPACK_IMPORTED_MODULE_4__model_steps__["a" /* Steps */]())
-        ];
+        dataService.fetch().then(function (parsedData) {
+            _this.hikes = parsedData;
+        }).catch(function (err) {
+            window.alert("ERROR FETCHING DATA : " + err);
+        });
     }
-    HikingsList.prototype.itemTapped = function (evt, hike) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__hiking_details_hiking_details__["HikingDetails"], {
+    HikesList.prototype.itemTapped = function (evt, hike) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__hike_details_hike_details__["a" /* HikeDetails */], {
             item: hike
         });
     };
-    HikingsList = __decorate([
+    HikesList = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-list',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hikings-list/hikings-list.html"*/`<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hikings management</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<!-- <ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon name="{{item.icon}}" item-left></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-right>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n</ion-content> -->\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let hike of hikes" (click)="itemTapped($event, hike)">\n      {{ hike.name }}\n    </button>\n  </ion-list>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hikings-list/hikings-list.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hikes-list/hikes-list.html"*/`<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hikes list</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let hike of hikes" (click)="itemTapped($event, hike)">\n      {{ hike.name }}\n    </button>\n  </ion-list>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hikes-list/hikes-list.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
-    ], HikingsList);
-    return HikingsList;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__services_opendata_service__["a" /* OpenDataService */]])
+    ], HikesList);
+    return HikesList;
 }());
 
-//# sourceMappingURL=hikings-list.js.map
+//# sourceMappingURL=hikes-list.js.map
 
 /***/ }),
 
-/***/ 198:
+/***/ 195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export HikeDetails */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HikeDetails; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hike_in_process_hike_in_process__ = __webpack_require__(196);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -139,6 +102,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 var HikeDetails = (function () {
@@ -147,60 +111,91 @@ var HikeDetails = (function () {
         this.navParams = navParams;
         this.selectedItem = navParams.get('item');
     }
-    HikeDetails.prototype.openHikingInProcess = function () {
-        this.navCtrl.push('HikingInProcess', {
+    HikeDetails.prototype.start = function (evt) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__hike_in_process_hike_in_process__["a" /* HikeInProcess */], {
             item: this.selectedItem
         });
     };
     HikeDetails = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-item-details',
-            templateUrl: 'hike-details.html'
+            selector: 'page-hike-details',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-details/hike-details.html"*/`<ion-header>\n  <ion-navbar>\n    <button menuToggle *ngIf="!selectedItem">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Hike details</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div text-center *ngIf="selectedItem">\n    <h3> {{ selectedItem.name }} </h3>\n    <p> {{ selectedItem.describe() }} </p>\n  </div>\n  \n  <div text-center>\n    <button ion-button (click)=\'start($evt)\' color="dark">Start</button>\n  </div>\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-details/hike-details.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], HikeDetails);
     return HikeDetails;
-    var _a, _b;
 }());
 
-//# sourceMappingURL=hiking-details.js.map
+//# sourceMappingURL=hike-details.js.map
 
 /***/ }),
 
-/***/ 199:
+/***/ 196:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Point; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coords__ = __webpack_require__(157);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HikeInProcess; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_map_service__ = __webpack_require__(197);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
-/**
- * Describe an hike point on the map
- */
-var Point = (function () {
-    function Point(desc, latitude, longitude) {
-        this.desc = desc;
-        this.coords = new __WEBPACK_IMPORTED_MODULE_0__coords__["a" /* Coords */](latitude, longitude);
+
+
+var HikeInProcess = (function () {
+    function HikeInProcess(navCtrl, navParams, _mapService) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this._mapService = _mapService;
+        this.item = navParams.get('item');
+        console.log(this.item);
     }
-    Point.prototype.equals = function (other) {
-        return other.coords === this.coords
-            && other.desc === this.desc;
+    /**
+     * Start geolocation and set up steps markers if needed
+     */
+    HikeInProcess.prototype.ngAfterViewInit = function () {
+        this._mapService.init(this.map, this.item.start);
+        if (this.item.steps.isEmpty()) {
+            this._mapService.watch();
+        }
+        else {
+            this._mapService
+                .travel(this.item.steps, this.item.start, this.item.end)
+                .watch();
+        }
     };
-    return Point;
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+    ], HikeInProcess.prototype, "map", void 0);
+    HikeInProcess = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-hike-in-process',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/`<ion-header>\n\n  <ion-navbar>\n    <ion-title>Hike started</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h1>{{ item.name }}</h1>\n\n  <div #map id="map"></div>\n\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__services_map_service__["a" /* MapService */]])
+    ], HikeInProcess);
+    return HikeInProcess;
 }());
 
-//# sourceMappingURL=point.js.map
+//# sourceMappingURL=hike-in-process.js.map
 
 /***/ }),
 
-/***/ 227:
+/***/ 197:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_coords__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_coords__ = __webpack_require__(200);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -220,7 +215,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var MapService = (function () {
     function MapService(_geolocation) {
         this._geolocation = _geolocation;
-        this._points = [];
     }
     /**
      * Instanciate the map
@@ -254,12 +248,13 @@ var MapService = (function () {
             waypoints: this.buildWaypoints(steps),
             travelMode: 'WALKING'
         };
+        dirRenderer.setMap(this._map);
         dirService.route(opts, function (res, status) {
             if (status === 'OK') {
                 dirRenderer.setDirections(res);
             }
             else {
-                console.log(status);
+                window.alert("ERROR SET UP TRAVEL : " + status);
             }
         });
         return this;
@@ -299,22 +294,152 @@ var MapService = (function () {
     };
     MapService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _a || Object])
     ], MapService);
     return MapService;
+    var _a;
 }());
 
 //# sourceMappingURL=map-service.js.map
 
 /***/ }),
 
-/***/ 232:
+/***/ 200:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Coords; });
+/**
+ * Describe coordinates
+ */
+var Coords = (function () {
+    function Coords(latitude, longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.googleCoords = {
+            lat: latitude,
+            lng: longitude
+        };
+    }
+    return Coords;
+}());
+
+//# sourceMappingURL=coords.js.map
+
+/***/ }),
+
+/***/ 201:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OpenDataService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_hike__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_steps__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__model_point__ = __webpack_require__(203);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Open data service
+ * Fetch locations data and map it into hikes
+ */
+var OpenDataService = (function () {
+    function OpenDataService(_httpClient) {
+        this._httpClient = _httpClient;
+        this._url = 'https://geo.data.gouv.fr/api/geogw/file-packages/330f16f0c3db9aeaee868ca26777e20dfa189e65/download?format=GeoJSON&projection=WGS84';
+    }
+    /**
+     * Fetch and parse data
+     * @return promise providing mapped array
+     */
+    OpenDataService.prototype.fetch = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var hikes = [];
+            _this._httpClient.get(_this._url).subscribe(function (data) {
+                _this.parse(data, hikes);
+                resolve(hikes);
+            }, function (err) { return reject(err); });
+        });
+    };
+    /**
+     * Parse data into new hikes
+     * @param data to parse
+     * @param hikes receiver array
+     */
+    OpenDataService.prototype.parse = function (data, hikes) {
+        data.features.map(function (stub) {
+            var steps = new __WEBPACK_IMPORTED_MODULE_3__model_steps__["a" /* Steps */]();
+            var name = stub.properties.NOM_BOUCLE;
+            var coords = stub.geometry.coordinates;
+            var start = new __WEBPACK_IMPORTED_MODULE_4__model_point__["a" /* Point */]('start', coords[0][1], coords[0][0]);
+            var end = new __WEBPACK_IMPORTED_MODULE_4__model_point__["a" /* Point */]('end', coords[Math.ceil((coords.length - 1) / 2)][1], coords[Math.ceil((coords.length - 1) / 2)][0]);
+            steps.add('step', coords[Math.ceil((coords.length - 1) / 4)][1], coords[Math.ceil((coords.length - 1) / 4)][0]);
+            hikes.push(new __WEBPACK_IMPORTED_MODULE_2__model_hike__["a" /* Hike */](name, start, end, steps));
+        });
+    };
+    OpenDataService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+    ], OpenDataService);
+    return OpenDataService;
+}());
+
+//# sourceMappingURL=opendata-service.js.map
+
+/***/ }),
+
+/***/ 203:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Point; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coords__ = __webpack_require__(200);
+
+/**
+ * Describe an hike point on the map
+ */
+var Point = (function () {
+    function Point(desc, latitude, longitude) {
+        this.desc = desc;
+        this.coords = new __WEBPACK_IMPORTED_MODULE_0__coords__["a" /* Coords */](latitude, longitude);
+    }
+    /**
+     * Compare two points by their coordinates and descriptions
+     * @param other point to compare
+     * @return bool value
+     */
+    Point.prototype.equals = function (other) {
+        return other.coords === this.coords
+            && other.desc === this.desc;
+    };
+    return Point;
+}());
+
+//# sourceMappingURL=point.js.map
+
+/***/ }),
+
+/***/ 206:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(228);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -322,28 +447,32 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 237:
+/***/ 228:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_hikings_list_hikings_list__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_map_service__ = __webpack_require__(227);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_data_recovery__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_hike_details_hike_details__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_hikes_list_hikes_list__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_hike_in_process_hike_in_process__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__ = __webpack_require__(205);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_geolocation__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_map_service__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_opendata_service__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__(202);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -362,30 +491,35 @@ var AppModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__["HikingDetails"],
-                __WEBPACK_IMPORTED_MODULE_5__pages_hikings_list_hikings_list__["a" /* HikingsList */]
+                __WEBPACK_IMPORTED_MODULE_4__pages_hike_details_hike_details__["a" /* HikeDetails */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_hikes_list_hikes_list__["a" /* HikesList */],
+                __WEBPACK_IMPORTED_MODULE_6__pages_hike_in_process_hike_in_process__["a" /* HikeInProcess */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
+                __WEBPACK_IMPORTED_MODULE_12__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
-                    links: [
-                        { loadChildren: '../pages/hiking-in-process/hiking-in-process.module#HikingInProcessModule', name: 'HikingInProcess', segment: 'hiking-in-process', priority: 'low', defaultHistory: [] }
-                    ]
-                }),
+                    links: []
+                })
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_4__pages_hiking_details_hiking_details__["HikingDetails"],
-                __WEBPACK_IMPORTED_MODULE_5__pages_hikings_list_hikings_list__["a" /* HikingsList */]
+                __WEBPACK_IMPORTED_MODULE_4__pages_hike_details_hike_details__["a" /* HikeDetails */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_hikes_list_hikes_list__["a" /* HikesList */],
+                __WEBPACK_IMPORTED_MODULE_6__pages_hike_in_process_hike_in_process__["a" /* HikeInProcess */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__["a" /* StatusBar */],
-                __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__["a" /* Geolocation */],
-                __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__["a" /* SplashScreen */],
-                { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] },
-                __WEBPACK_IMPORTED_MODULE_10__providers_data_recovery__["a" /* DataRecoveyProvider */],
-                __WEBPACK_IMPORTED_MODULE_9__providers_map_service__["a" /* MapService */]
+                __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_9__ionic_native_geolocation__["a" /* Geolocation */],
+                __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__["a" /* SplashScreen */],
+                __WEBPACK_IMPORTED_MODULE_12__angular_common_http__["a" /* HttpClient */],
+                __WEBPACK_IMPORTED_MODULE_10__services_map_service__["a" /* MapService */],
+                __WEBPACK_IMPORTED_MODULE_11__services_opendata_service__["a" /* OpenDataService */],
+                {
+                    provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["u" /* ErrorHandler */],
+                    useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */]
+                }
             ]
         })
     ], AppModule);
@@ -396,16 +530,16 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 270:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_hikings_list_hikings_list__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_hikes_list_hikes_list__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(205);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -427,11 +561,11 @@ var MyApp = (function () {
         this.statusBar = statusBar;
         this.splashScreen = splashScreen;
         // make HelloIonicPage the root (or first) page
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_2__pages_hikings_list_hikings_list__["a" /* HikingsList */];
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_2__pages_hikes_list_hikes_list__["a" /* HikesList */];
         this.initializeApp();
         // set our app's pages
         this.pages = [
-            { title: 'Hikings', component: __WEBPACK_IMPORTED_MODULE_2__pages_hikings_list_hikings_list__["a" /* HikingsList */] }
+            { title: 'Hikes', component: __WEBPACK_IMPORTED_MODULE_2__pages_hikes_list_hikes_list__["a" /* HikesList */] }
         ];
     }
     MyApp.prototype.initializeApp = function () {
@@ -450,14 +584,14 @@ var MyApp = (function () {
         this.nav.setRoot(page.component);
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/app/app.html"*/`<ion-menu [content]="content">\n\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Pages</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* MenuController */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__["a" /* StatusBar */],
             __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
@@ -468,7 +602,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 281:
+/***/ 284:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -501,12 +635,12 @@ var Hike = (function () {
 
 /***/ }),
 
-/***/ 282:
+/***/ 285:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Steps; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__point__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__point__ = __webpack_require__(203);
 
 /**
  * Describe the points set for an hike
@@ -537,58 +671,7 @@ var Steps = (function () {
 
 //# sourceMappingURL=steps.js.map
 
-/***/ }),
-
-/***/ 283:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DataRecoveyProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/*
-  Generated class for the DataRecoveyProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-var DataRecoveyProvider = (function () {
-    function DataRecoveyProvider(http) {
-        this.http = http;
-        this.apiUrl = 'https://www.data.gouv.fr/fr/datasets/r/982d8640-faf8-4fdc-a5de-6e6bad1148f0';
-        console.log('Hello DataRecoveyProvider Provider');
-    }
-    DataRecoveyProvider.prototype.getAll = function () {
-        var _this = this;
-        return new Promise(function (resolve) {
-            _this.http.get(_this.apiUrl).subscribe(function (data) {
-                resolve(data);
-            }, function (err) {
-                console.log(err);
-            });
-        });
-    };
-    DataRecoveyProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
-    ], DataRecoveyProvider);
-    return DataRecoveyProvider;
-}());
-
-//# sourceMappingURL=data-recovery.js.map
-
 /***/ })
 
-},[232]);
+},[206]);
 //# sourceMappingURL=main.js.map
