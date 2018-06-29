@@ -20,23 +20,13 @@ export class HikeInProcess {
       this.item = navParams.get('item');
     }
 
-    /**
-     * Start geolocation and set up steps markers if needed
-     */
     public ngAfterViewInit() : void {
-      this._mapService.init(this.map, this.item.start);
-      if (this.item.steps.isEmpty()) {
-        this._mapService.watch();
-      } else {
-        this._mapService
-          .travel(this.item.steps, this.item.start, this.item.end)
-          .watch();
-      }
+      this._mapService
+        .init(this.map, this.item.start)
+        .travel(this.item.steps, this.item.start, this.item.end)
+        .watch();
     }
 
-    /**
-     * Reset timer when leaving page
-     */
     public ngOnDestroy(): void {
       this.timerService.stop();
       this.timerService.reset();
