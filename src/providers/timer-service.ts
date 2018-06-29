@@ -14,8 +14,9 @@ export class TimerService {
 
     /**
      * Start timer, updating time value every second
+     * @return service instance
      */
-    public start() : void {
+    public start() : TimerService {
         const iteration = () => {
             if (this._sec === 59) {
                 this._sec = 0;
@@ -26,21 +27,26 @@ export class TimerService {
         }
 
         this._timerTask = setInterval(iteration, 1000);
+        return this;
     }
 
     /**
      * Stop the timer, keep min and sec values
+     * @return service instance
      */
-    public stop() : void {
+    public stop() : TimerService {
         clearInterval(this._timerTask);
+        return this;
     }
 
     /**
      * Reset min and sec values to zero
+     * @return service instance
      */
-    public reset() : void {
+    public reset() : TimerService {
         this.stop();
         this._sec = this._min = 0;
+        return this;
     }
 
     /**

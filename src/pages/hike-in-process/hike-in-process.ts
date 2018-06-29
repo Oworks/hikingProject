@@ -28,8 +28,7 @@ export class HikeInProcess {
     }
 
     public ngOnDestroy(): void {
-      this.timerService.stop();
-      this.timerService.reset();
+      this.timerService.stop().reset();
     }
 
     public startTimer() : void {
