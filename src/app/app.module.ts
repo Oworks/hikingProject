@@ -8,8 +8,9 @@ import { HikeInProcess } from '../pages/hike-in-process/hike-in-process';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
-import { MapService } from '../services/map-service';
-import { OpenDataService } from '../services/opendata-service';
+import { MapService } from '../providers/map-service';
+import { OpenDataService } from '../providers/opendata-service';
+import { TimerService } from '../providers/timer-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -38,6 +39,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     HttpClient,
     MapService,
     OpenDataService,
+    TimerService,
     {
       provide: ErrorHandler, 
       useClass: IonicErrorHandler
