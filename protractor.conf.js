@@ -6,8 +6,7 @@ let wdBridge = require('wd-bridge')(protractor, wd);
 exports.config = {
     // Adresse du serveur Appium par défaut 
     seleniumAddress: 'http://localhost:4723/wd/hub',
-    // Emplacement de nos tests fonctionnels. Nous chargeons ici tous les fichiers présents dans le dossier ./e2e
-    // et suffixés par .e2e.js
+    // Emplacement de nos tests fonctionnels
     specs: ['./tests/**/*.e2e.js'],
     // Configuration du mobile sur lequel sera exécuté les tests. 
     // Pour ajouter plusieurs cibles, voir : https://github.com/angular/protractor/blob/master/lib/config.ts
@@ -16,7 +15,7 @@ exports.config = {
         // Le nom de la plateform : android | ios | windows
         platformName: 'android',
         deviceName: 'moto X play',
-        browserName: "",
+        browserName: '',
         autoWebview: true,
         // Nous indiquons ici l'emplacement vers l'application à tester, artefact de la commande `ionic build android`
         app: path.join(__dirname, '/platforms/android/build/outputs/apk/android-debug.apk'),
@@ -24,7 +23,7 @@ exports.config = {
         // autoWebviewTimeout: 20000
     },
     baseUrl: 'http://localhost:8100/',
-    onPrepare: ()=>{
+    onPrepare: () => {
         // Initialisation du bridge wd avec la configuration de Protractor
         wdBridge.initFromProtractor(exports.config);
     }

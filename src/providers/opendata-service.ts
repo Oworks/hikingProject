@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Hike } from '../model/hike';
 import { Steps } from '../model/steps';
 import { Point } from '../model/point';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Open data service
@@ -13,20 +14,23 @@ export class OpenDataService {
   
   private _URL : string = 'https://geo.data.gouv.fr/api/geogw/file-packages/330f16f0c3db9aeaee868ca26777e20dfa189e65/download?format=GeoJSON&projection=WGS84';
 
+  private _hikes : Hike[] = [];
 
   constructor (private _httpClient: HttpClient) {}
 
   /**
    * Fetch and parse data
-   * @return promise providing mapped array
+   * @return observer providing mapped array
    */
-  public fetch() : Promise<Hike[]> {
-    return new Promise((resolve, reject) => {
-      const hikes = [];
+  public fetch() : Observable<Hike[]> {
+    return new Observable(observer => {
       this._httpClient.get(this._URL).subscribe(data => {
-        this.parse(data, hikes);
-        resolve(hikes);
-      }, err => reject(err));
+        this.parse(data);
+        observer.next(this._hikes);
+        observer.complete();
+      }, err => {
+        observer.error(err);
+      });
     });
   }
 
@@ -35,7 +39,7 @@ export class OpenDataService {
    * @param data to parse
    * @param hikes receiver array
    */
-  private parse(data, hikes) : void {
+  private parse(data) : void {
     data.features.map(stub => {
       const steps = new Steps();
       const name = stub.properties.NOM_BOUCLE;
@@ -46,7 +50,7 @@ export class OpenDataService {
       steps.add('step', coords[Math.ceil((coords.length - 1) / 4)][1], 
         coords[Math.ceil((coords.length - 1) / 4)][0]);
       if (!name || !coords || !start || !end) return;
-      hikes.push(new Hike(name, start, end, steps));
+      this._hikes.push(new Hike(name, start, end, steps));
     });
   } 
 

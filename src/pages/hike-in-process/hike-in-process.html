@@ -9,10 +9,10 @@
 
 <ion-content padding>
   <h1>{{ item.name }}</h1>
-  <h4>Timer &nbsp; {{ timerService.current() | timer }}</h4> &nbsp;
+  <h4>Timer &nbsp; {{ timerService.current() | timer }}</h4>
   <button ion-button small round (click)="startTimer($event)">Start</button>
-  <button ion-button small round (click)="stopTimer($event)">Stop</button>
-  <button ion-button small round (click)="resetTimer($event)">Reset</button>
+  <button ion-button small color="danger" round (click)="stopTimer($event)">Stop</button>
+  <button ion-button small color="dark" round (click)="resetTimer($event)">Reset</button>
   <br/> <br/> <br/>
   <div #map id="map"></div>
 

@@ -14,14 +14,17 @@ export class HikesList {
   public hikes : Hike[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    loading : LoadingController, dataService : OpenDataService) {
-    const loader = loading.create({ content: "Fetching data..." });
+    loading: LoadingController, dataService: OpenDataService) {
+    const loader = loading.create({ 
+      content: 'Fetching data...' 
+    });
     loader.present();
-    dataService.fetch().then(parsedData => {
-      this.hikes = parsedData;
-      loader.dismiss();
-    }).catch(err => {
-      window.alert(`ERROR FETCHING DATA : ${err}`);
+    dataService.fetch().subscribe(parsed => {
+      this.hikes = parsed;
+    }, err => {
+      console.log(err);
+      window.alert('Error fetching data');
+    }, () => {
       loader.dismiss();
     });
   }

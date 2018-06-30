@@ -10,13 +10,13 @@ import { TimerService } from '../../providers/timer-service';
 })
 export class HikeInProcess {
 
-    @ViewChild('map')
-    map : ElementRef;
-
     public item : Hike;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public timerService : TimerService,
-      private _mapService : MapService) {
+    @ViewChild('map')
+    public map : ElementRef;
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, 
+      public timerService : TimerService, private _mapService : MapService) {
       this.item = navParams.get('item');
     }
 
@@ -28,7 +28,9 @@ export class HikeInProcess {
     }
 
     public ngOnDestroy(): void {
-      this.timerService.stop().reset();
+      this.timerService
+        .stop()
+        .reset();
     }
 
     public startTimer() : void {

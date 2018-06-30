@@ -62,13 +62,16 @@ var HikesList = (function () {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        var loader = loading.create({ content: "Fetching data..." });
+        var loader = loading.create({
+            content: 'Fetching data...'
+        });
         loader.present();
-        dataService.fetch().then(function (parsedData) {
-            _this.hikes = parsedData;
-            loader.dismiss();
-        }).catch(function (err) {
-            window.alert("ERROR FETCHING DATA : " + err);
+        dataService.fetch().subscribe(function (parsed) {
+            _this.hikes = parsed;
+        }, function (err) {
+            console.log(err);
+            window.alert('Error fetching data');
+        }, function () {
             loader.dismiss();
         });
     }
@@ -165,26 +168,16 @@ var HikeInProcess = (function () {
         this._mapService = _mapService;
         this.item = navParams.get('item');
     }
-    /**
-     * Start geolocation and set up steps markers if needed
-     */
     HikeInProcess.prototype.ngAfterViewInit = function () {
-        this._mapService.init(this.map, this.item.start);
-        if (this.item.steps.isEmpty()) {
-            this._mapService.watch();
-        }
-        else {
-            this._mapService
-                .travel(this.item.steps, this.item.start, this.item.end)
-                .watch();
-        }
+        this._mapService
+            .init(this.map, this.item.start)
+            .travel(this.item.steps, this.item.start, this.item.end)
+            .watch();
     };
-    /**
-     * Reset timer when leaving page
-     */
     HikeInProcess.prototype.ngOnDestroy = function () {
-        this.timerService.stop();
-        this.timerService.reset();
+        this.timerService
+            .stop()
+            .reset();
     };
     HikeInProcess.prototype.startTimer = function () {
         this.timerService.start();
@@ -201,10 +194,10 @@ var HikeInProcess = (function () {
     ], HikeInProcess.prototype, "map", void 0);
     HikeInProcess = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-hike-in-process',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/`<ion-header>\n\n  <ion-navbar>\n    <ion-title>Hike started</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h1>{{ item.name }}</h1>\n  <h4>Timer &nbsp; {{ timerService.current() | timer }}</h4> &nbsp;\n  <button ion-button small round (click)="startTimer($event)">Start</button>\n  <button ion-button small round (click)="stopTimer($event)">Stop</button>\n  <button ion-button small round (click)="resetTimer($event)">Reset</button>\n  <br/> <br/> <br/>\n  <div #map id="map"></div>\n\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/,
+            selector: 'page-hike-in-process',template:/*ion-inline-start:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/`<ion-header>\n\n  <ion-navbar>\n    <ion-title>Hike started</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h1>{{ item.name }}</h1>\n  <h4>Timer &nbsp; {{ timerService.current() | timer }}</h4>\n  <button ion-button small round (click)="startTimer($event)">Start</button>\n  <button ion-button small color="danger" round (click)="stopTimer($event)">Stop</button>\n  <button ion-button small color="dark" round (click)="resetTimer($event)">Reset</button>\n  <br/> <br/> <br/>\n  <div #map id="map"></div>\n\n</ion-content>\n`/*ion-inline-end:"/Users/hugo/Documents/IUT/Ionic/Ionic-project/src/pages/hike-in-process/hike-in-process.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_timer_service__["a" /* TimerService */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_map_service__["a" /* MapService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_timer_service__["a" /* TimerService */], __WEBPACK_IMPORTED_MODULE_2__providers_map_service__["a" /* MapService */]])
     ], HikeInProcess);
     return HikeInProcess;
 }());
@@ -260,6 +253,24 @@ var MapService = (function () {
         return this;
     };
     /**
+     * Start watching user position
+     * @return service instance
+     */
+    MapService.prototype.watch = function () {
+        var _this = this;
+        if (this._map) {
+            var watcher = this._geolocation.watchPosition();
+            var infos_1 = new google.maps.InfoWindow({ map: this._map });
+            watcher.subscribe(function (data) {
+                var pos = new __WEBPACK_IMPORTED_MODULE_2__model_coords__["a" /* Coords */](data.coords.latitude, data.coords.longitude);
+                _this._map.setCenter(pos.googleCoords);
+                infos_1.setPosition(pos.googleCoords);
+                infos_1.setContent('You are here');
+            });
+        }
+        return this;
+    };
+    /**
      * Set travel options
      * @param steps steps to add
      * @return service instance
@@ -279,27 +290,9 @@ var MapService = (function () {
                 dirRenderer.setDirections(res);
             }
             else {
-                window.alert("ERROR SET UP TRAVEL : " + status);
+                window.alert('Error setting up waypoints');
             }
         });
-        return this;
-    };
-    /**
-     * Start watching user position
-     * @return service instance
-     */
-    MapService.prototype.watch = function () {
-        var _this = this;
-        if (this._map) {
-            var watcher = this._geolocation.watchPosition();
-            var infos_1 = new google.maps.InfoWindow({ map: this._map });
-            watcher.subscribe(function (data) {
-                var pos = new __WEBPACK_IMPORTED_MODULE_2__model_coords__["a" /* Coords */](data.coords.latitude, data.coords.longitude);
-                _this._map.setCenter(pos.googleCoords);
-                infos_1.setPosition(pos.googleCoords);
-                infos_1.setContent('You are here');
-            });
-        }
         return this;
     };
     /**
@@ -376,6 +369,7 @@ var TimerService = (function () {
     }
     /**
      * Start timer, updating time value every second
+     * @return service instance
      */
     TimerService.prototype.start = function () {
         var _this = this;
@@ -389,19 +383,24 @@ var TimerService = (function () {
             }
         };
         this._timerTask = setInterval(iteration, 1000);
+        return this;
     };
     /**
      * Stop the timer, keep min and sec values
+     * @return service instance
      */
     TimerService.prototype.stop = function () {
         clearInterval(this._timerTask);
+        return this;
     };
     /**
      * Reset min and sec values to zero
+     * @return service instance
      */
     TimerService.prototype.reset = function () {
         this.stop();
         this._sec = this._min = 0;
+        return this;
     };
     /**
      * Get current time value
@@ -430,6 +429,8 @@ var TimerService = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_hike__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_steps__ = __webpack_require__(286);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__model_point__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -444,6 +445,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Open data service
  * Fetch locations data and map it into hikes
@@ -452,19 +454,22 @@ var OpenDataService = (function () {
     function OpenDataService(_httpClient) {
         this._httpClient = _httpClient;
         this._URL = 'https://geo.data.gouv.fr/api/geogw/file-packages/330f16f0c3db9aeaee868ca26777e20dfa189e65/download?format=GeoJSON&projection=WGS84';
+        this._hikes = [];
     }
     /**
      * Fetch and parse data
-     * @return promise providing mapped array
+     * @return observer providing mapped array
      */
     OpenDataService.prototype.fetch = function () {
         var _this = this;
-        return new Promise(function (resolve, reject) {
-            var hikes = [];
+        return new __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__["Observable"](function (observer) {
             _this._httpClient.get(_this._URL).subscribe(function (data) {
-                _this.parse(data, hikes);
-                resolve(hikes);
-            }, function (err) { return reject(err); });
+                _this.parse(data);
+                observer.next(_this._hikes);
+                observer.complete();
+            }, function (err) {
+                observer.error(err);
+            });
         });
     };
     /**
@@ -472,7 +477,8 @@ var OpenDataService = (function () {
      * @param data to parse
      * @param hikes receiver array
      */
-    OpenDataService.prototype.parse = function (data, hikes) {
+    OpenDataService.prototype.parse = function (data) {
+        var _this = this;
         data.features.map(function (stub) {
             var steps = new __WEBPACK_IMPORTED_MODULE_3__model_steps__["a" /* Steps */]();
             var name = stub.properties.NOM_BOUCLE;
@@ -482,7 +488,7 @@ var OpenDataService = (function () {
             steps.add('step', coords[Math.ceil((coords.length - 1) / 4)][1], coords[Math.ceil((coords.length - 1) / 4)][0]);
             if (!name || !coords || !start || !end)
                 return;
-            hikes.push(new __WEBPACK_IMPORTED_MODULE_2__model_hike__["a" /* Hike */](name, start, end, steps));
+            _this._hikes.push(new __WEBPACK_IMPORTED_MODULE_2__model_hike__["a" /* Hike */](name, start, end, steps));
         });
     };
     OpenDataService = __decorate([
@@ -821,6 +827,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var TimerPipe = (function () {
     function TimerPipe() {
     }
+    /**
+     * Add a zero before timer numbers if needed (format: <0:0>)
+     * @param value str timer value
+     * @return new formated str value
+     */
     TimerPipe.prototype.transform = function (value) {
         var str = value.split(':');
         for (var i = 0; i < str.length; i++) {

@@ -35,7 +35,10 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.0",
-    "typescript": "2.4.2"
+    "protractor": "^5.3.2",
+    "typescript": "2.4.2",
+    "wd": "^1.10.1",
+    "wd-bridge": "0.0.2"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",

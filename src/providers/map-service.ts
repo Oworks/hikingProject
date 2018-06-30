@@ -37,6 +37,24 @@ export class MapService {
     }
 
     /**
+     * Start watching user position
+     * @return service instance
+     */
+    public watch() : MapService {
+        if (this._map) {
+            const watcher = this._geolocation.watchPosition();
+            const infos = new google.maps.InfoWindow({ map: this._map });
+            watcher.subscribe(data => {
+                let pos = new Coords(data.coords.latitude, data.coords.longitude);
+                this._map.setCenter(pos.googleCoords);
+                infos.setPosition(pos.googleCoords);
+                infos.setContent('You are here');
+            });
+        }
+        return this;
+    }
+
+    /**
      * Set travel options
      * @param steps steps to add
      * @return service instance
@@ -55,27 +73,9 @@ export class MapService {
             if (status === 'OK') {
                 dirRenderer.setDirections(res);
             } else {
-                window.alert(`ERROR SET UP TRAVEL : ${status}`);
+                window.alert('Error setting up waypoints');
             }
         });
-        return this;
-    }
-
-    /**
-     * Start watching user position
-     * @return service instance
-     */
-    public watch() : MapService {
-        if (this._map) {
-            const watcher = this._geolocation.watchPosition();
-            const infos = new google.maps.InfoWindow({ map: this._map });
-            watcher.subscribe(data => {
-                let pos = new Coords(data.coords.latitude, data.coords.longitude);
-                this._map.setCenter(pos.googleCoords);
-                infos.setPosition(pos.googleCoords);
-                infos.setContent('You are here');
-            });
-        }
         return this;
     }
 
