@@ -22,12 +22,10 @@ describe('MapService', () => {
 
     it('should display hike and step points on map', () => {
         afterState = service.travel(data.steps, data.dep, data.arr);
-        // todo
     });
 
     it('should display cursor binded to user position', () => {
         afterState = service.watch();
-        // todo
     });
 });
 
